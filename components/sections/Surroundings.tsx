@@ -47,10 +47,23 @@ const ORDER: CategoryKey[] = [
 const IMAGE: Record<CategoryKey, string> = {
   restaurants: "restaurants-v3.jpg",
   experiences: "experiences-v3.jpg",
-  nature: "nature-v3.jpg",
+  nature: "nature/wildline.webp",
   culture: "culture-v3.jpg",
   wellness: "wellness-v3.webp",
-  regional: "regional-v3.jpg",
+  regional: "regional/zordel.webp",
+};
+
+// Foto-Quellen je Kategorie (urheberrechtskonform, dezent unten rechts).
+const SOURCE: Record<CategoryKey, { label: string; href: string }> = {
+  restaurants: { label: "benders-restaurant.de", href: "https://benders-restaurant.de" },
+  experiences: {
+    label: "neuenbuerg.de",
+    href: "https://www.neuenbuerg.de/freizeit-erlebnis/sehenswertes-in-um-neuenbuerg/besucherbergwerk",
+  },
+  nature: { label: "bwegt.de", href: "https://www.bwegt.de" },
+  culture: { label: "schloss-neuenbuerg.de", href: "https://www.schloss-neuenbuerg.de" },
+  wellness: { label: "schloss-neuenbuerg.de", href: "https://www.schloss-neuenbuerg.de" },
+  regional: { label: "schwarzwald-tourismus.info", href: "https://www.schwarzwald-tourismus.info" },
 };
 
 export function Surroundings() {
@@ -73,11 +86,12 @@ export function Surroundings() {
         <div className="mt-16 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:pb-0 lg:grid-cols-3">
           {ORDER.map((key, i) => {
             const cat = t.surroundings.categories[key];
+            const source = SOURCE[key];
             return (
               <Reveal
                 key={key}
                 delay={(i % 3) * 90}
-                className="w-[78vw] shrink-0 snap-start sm:w-auto"
+                className="relative w-[78vw] shrink-0 snap-start sm:w-auto"
               >
                 <Link
                   href={`/umgebung/${key}`}
@@ -116,6 +130,16 @@ export function Surroundings() {
                     <span className="mt-5 h-px w-8 bg-brass-400 transition-all duration-500 group-hover:w-16" />
                   </div>
                 </Link>
+
+                {/* Dezente Foto-Quellenangabe (Geschwister des Karten-Links, nicht verschachtelt) */}
+                <a
+                  href={source.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="pointer-events-auto absolute bottom-1.5 right-2.5 z-20 font-body text-[9px] tracking-wide text-cream-50/45 transition-colors [text-shadow:_0_1px_2px_rgba(0,0,0,0.55)] hover:text-cream-50/80"
+                >
+                  {t.surroundings.card.photo} {source.label}
+                </a>
               </Reveal>
             );
           })}
