@@ -11,7 +11,7 @@ export type Locale = (typeof locales)[number];
 export const defaultLocale: Locale = 'de';
 
 /** Im Sprachwähler sichtbar (echte Übersetzungen). Phase 1A: nur Deutsch. */
-export const availableLocales: Locale[] = ['de', 'en', 'ar'];
+export const availableLocales: Locale[] = ['de', 'en', 'ar', 'zh'];
 
 export const localeNames: Record<Locale, string> = {
   de: 'Deutsch',
