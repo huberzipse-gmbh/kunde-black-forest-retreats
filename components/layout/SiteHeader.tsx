@@ -125,6 +125,9 @@ export function SiteHeader() {
           open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
       >
+        {/* Sprach-Slider oben im Menü */}
+        <LanguageSwitcher className="absolute inset-x-0 top-24 z-10 md:top-28" />
+
         <nav className="flex h-full flex-col items-center justify-center gap-3 px-6">
           {NAV.map((item, i) => (
             <a
@@ -140,7 +143,6 @@ export function SiteHeader() {
           <span className="mt-10 font-body text-[0.62rem] font-medium uppercase tracking-[0.34em] text-cream-100/50">
             {t.park.name}
           </span>
-          <LanguageSwitcher className="mt-8 text-center" />
         </nav>
       </div>
     </>

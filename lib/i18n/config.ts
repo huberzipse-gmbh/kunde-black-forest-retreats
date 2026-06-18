@@ -20,6 +20,14 @@ export const localeNames: Record<Locale, string> = {
   zh: '中文',
 };
 
+/** Kurzkürzel je Sprache, in der eigenen Schrift (für den kompakten Slider). */
+export const localeShort: Record<Locale, string> = {
+  de: 'DE',
+  en: 'EN',
+  ar: 'عر',
+  zh: '中',
+};
+
 export const dir = (l: Locale): 'ltr' | 'rtl' => (l === 'ar' ? 'rtl' : 'ltr');
 
 export const isLocale = (s?: string | null): s is Locale =>
