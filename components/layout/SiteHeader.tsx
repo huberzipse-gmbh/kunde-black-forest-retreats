@@ -47,9 +47,9 @@ export function SiteHeader() {
             : "bg-transparent pt-8 pb-5 md:pt-10 md:pb-6"
         }`}
       >
-        <div className="mx-auto grid max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-5 md:px-10">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-5 md:px-10">
           {/* Links: Menü-Button */}
-          <div className="flex justify-start">
+          <div className="flex shrink-0 justify-start">
             <button
               type="button"
               aria-label={open ? t.nav.close : t.nav.menu}
@@ -84,14 +84,14 @@ export function SiteHeader() {
             </button>
           </div>
 
-          {/* Mitte: Logo */}
+          {/* Mitte: Logo (flex-zentriert zwischen Menü-Button und Slider) */}
           <Link
             href="/"
             onClick={() => setOpen(false)}
-            className="flex flex-col items-center text-center"
+            className="flex min-w-0 flex-1 flex-col items-center px-1 text-center"
           >
             <span
-              className={`font-display whitespace-nowrap text-[1.06rem] leading-none tracking-[0.14em] transition-colors duration-500 md:text-[1.375rem] ${
+              className={`font-display whitespace-nowrap text-[0.88rem] leading-none tracking-[0.1em] transition-colors duration-500 sm:text-[1.06rem] sm:tracking-[0.14em] md:text-[1.375rem] ${
                 light ? "text-white" : "text-forest-900"
               }`}
             >
@@ -106,12 +106,12 @@ export function SiteHeader() {
             </span>
           </Link>
 
-          {/* Rechts: Buchen — auf Mobile ausgeblendet (fixe Bottom-Bar übernimmt),
-              Spalte bleibt erhalten, damit das Logo zentriert bleibt */}
-          <div className="hidden justify-end md:flex">
+          {/* Rechts: Sprach-Slider (immer sichtbar) + Buchen (Desktop; mobil übernimmt die Bottom-Bar) */}
+          <div className="flex shrink-0 items-center justify-end gap-2 md:gap-3">
+            <LanguageSwitcher compact showLabel={false} />
             <Link
               href="/#apartments"
-              className="rounded-[3px] border border-forest-900 bg-forest-900 px-4 py-2.5 font-body text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-white transition-colors duration-300 hover:bg-white hover:text-forest-900 md:px-6 md:text-xs"
+              className="hidden rounded-[3px] border border-forest-900 bg-forest-900 px-4 py-2.5 font-body text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-white transition-colors duration-300 hover:bg-white hover:text-forest-900 md:inline-flex md:px-6 md:text-xs"
             >
               {t.nav.book}
             </Link>
@@ -125,9 +125,6 @@ export function SiteHeader() {
           open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
       >
-        {/* Sprach-Slider oben im Menü */}
-        <LanguageSwitcher className="absolute inset-x-0 top-24 z-10 md:top-28" />
-
         <nav className="flex h-full flex-col items-center justify-center gap-3 px-6">
           {NAV.map((item, i) => (
             <a
