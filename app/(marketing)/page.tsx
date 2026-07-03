@@ -7,12 +7,17 @@ import { FactDecor } from "@/components/sections/FactDecor";
 import { GiftVoucher } from "@/components/sections/GiftVoucher";
 import { ApartmentsPreview } from "@/components/sections/ApartmentsPreview";
 import { RegionMap } from "@/components/sections/RegionMap";
+import { getStrings } from "@/lib/i18n/server";
+import { getRetreatCards } from "@/lib/retreats/db";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const t = await getStrings();
+  const retreats = await getRetreatCards(t);
+
   return (
     <>
       <Hero />
-      <ApartmentsShowcase />
+      <ApartmentsShowcase retreats={retreats} />
       <FloatingSauna />
       <Surroundings />
       <SchwarzwaldFact

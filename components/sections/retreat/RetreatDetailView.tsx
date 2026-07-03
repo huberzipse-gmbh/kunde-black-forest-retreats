@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { getLocalizedRetreat } from "@/data/retreats";
+import type { RetreatCard } from "@/data/retreats";
 import { useLocale, useStrings } from "@/lib/i18n/I18nProvider";
 import { fmtNum } from "@/lib/i18n/format";
 import { Type } from "@/components/ui/Type";
@@ -17,15 +17,13 @@ import {
   Stars,
 } from "@/components/sections/retreat/RetreatSections";
 
-export function RetreatDetailView({ slug }: { slug: string }) {
+export function RetreatDetailView({ retreat }: { retreat: RetreatCard }) {
   const strings = useStrings();
-  const retreat = getLocalizedRetreat(slug, strings);
-  // Existenz ist server-seitig geprüft; defensiver Fallback.
-  if (!retreat) return null;
-
   const t = strings.apartments;
   const locale = useLocale();
   const sold = Boolean(retreat.soldOut);
+  // Direktbuchung über unser Portal (statischer Fallback: buchbar, wenn nicht ausgebucht).
+  const bookable = !sold && (retreat.bookable ?? true);
   const untilLabel =
     sold && retreat.soldOutUntil
       ? fmtNum(t.soldOut.until(retreat.soldOutUntil), locale)
@@ -122,16 +120,24 @@ export function RetreatDetailView({ slug }: { slug: string }) {
             className="mt-7 text-cream-100/90"
           />
 
-          {!sold && retreat.airbnbUrl && (
-            <div className="mt-9">
-              <a
-                href={retreat.airbnbUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+          {bookable && (
+            <div className="mt-9 flex flex-wrap items-center gap-4">
+              <Link
+                href={`/buchen/${retreat.slug}`}
                 className="inline-flex items-center justify-center rounded-[3px] bg-brass-400 px-8 py-4 font-body text-xs font-semibold uppercase tracking-[0.18em] text-night transition-colors duration-300 hover:bg-brass-300"
               >
                 {t.detail.book}
-              </a>
+              </Link>
+              {retreat.airbnbUrl && (
+                <a
+                  href={retreat.airbnbUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center rounded-[3px] border border-cream-50/40 px-6 py-4 font-body text-xs font-semibold uppercase tracking-[0.18em] text-cream-50 transition-colors duration-300 hover:bg-cream-50/10"
+                >
+                  {strings.bookingFlow.alsoOnAirbnb}
+                </a>
+              )}
             </div>
           )}
         </div>
@@ -221,15 +227,23 @@ export function RetreatDetailView({ slug }: { slug: string }) {
               <Type role="lead" className="mx-auto mt-7 max-w-xl text-cream-100/85">
                 {t.detail.bookText}
               </Type>
-              <div className="mt-10">
-                <a
-                  href={retreat.airbnbUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+              <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+                <Link
+                  href={`/buchen/${retreat.slug}`}
                   className="inline-flex items-center justify-center rounded-[3px] bg-brass-400 px-8 py-4 font-body text-xs font-semibold uppercase tracking-[0.18em] text-night transition-colors duration-300 hover:bg-brass-300"
                 >
                   {t.detail.book}
-                </a>
+                </Link>
+                {retreat.airbnbUrl && (
+                  <a
+                    href={retreat.airbnbUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center rounded-[3px] border border-cream-50/40 px-6 py-4 font-body text-xs font-semibold uppercase tracking-[0.18em] text-cream-50 transition-colors duration-300 hover:bg-cream-50/10"
+                  >
+                    {strings.bookingFlow.alsoOnAirbnb}
+                  </a>
+                )}
               </div>
               <Type
                 role="caption"

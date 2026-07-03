@@ -1,16 +1,20 @@
 "use client";
 
 import { useRef } from "react";
-import { localizeRetreats } from "@/data/retreats";
+import { localizeRetreats, type RetreatCard } from "@/data/retreats";
 import { useLocale, useStrings } from "@/lib/i18n/I18nProvider";
 import { fmtNum } from "@/lib/i18n/format";
 import { SectionIntro } from "@/components/ui/SectionIntro";
 import { ApartmentCard } from "./ApartmentCard";
 
-export function ApartmentsShowcase() {
+/**
+ * Karten-Karussell der Unterkünfte. Die Daten kommen server-seitig aus der
+ * DB (lib/retreats/db.ts) — ohne Prop (z. B. alte Aufrufer) statischer Fallback.
+ */
+export function ApartmentsShowcase({ retreats: fromDb }: { retreats?: RetreatCard[] }) {
   const t = useStrings();
   const locale = useLocale();
-  const retreats = localizeRetreats(t);
+  const retreats = fromDb ?? localizeRetreats(t);
   const scroller = useRef<HTMLDivElement>(null);
 
   const scrollByCards = (dir: number) => {

@@ -17,7 +17,14 @@ import type { Strings } from '@/lib/strings/de';
  * Text (name/highlight/usps[].title … ) wird beim Mergen ergänzt.
  */
 export interface RetreatStruct
-  extends Omit<Retreat, 'name' | 'shortDescription' | 'description' | 'amenities'> {
+  extends Omit<
+    Retreat,
+    'name' | 'shortDescription' | 'description' | 'amenities' | 'minNights'
+  > {
+  /** Mindestaufenthalt in Nächten (DB-gepflegt; statisch default 2). */
+  minNights?: number;
+  /** Direkt buchbar über unser Portal (DB-gepflegt). */
+  bookable?: boolean;
   image: string;        // Cover-Foto ('' → Mockup-Verlauf, bis ein Foto da ist)
   gallery: string[];    // Galerie für die Detailseite
   beds: number;
