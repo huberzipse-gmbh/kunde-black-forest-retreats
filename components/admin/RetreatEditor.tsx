@@ -467,15 +467,6 @@ function MasterDataTab({ retreat, onSaved }: { retreat: any | null; onSaved: (ms
         </div>
       </div>
 
-      {/* Airbnb-Link */}
-      <div className={card}>
-        <h2 className="font-body text-xs font-semibold uppercase tracking-wider text-forest-700/60">Airbnb</h2>
-        <div className="mt-4">
-          <label className={label}>Airbnb-Inserats-URL (Sekundärlink auf der Website)</label>
-          <input className={input} value={form.airbnb_url} onChange={(e) => set({ airbnb_url: e.target.value })} placeholder="https://www.airbnb.de/rooms/…" />
-        </div>
-      </div>
-
       {error && <p className="font-body text-sm text-red-800">{error}</p>}
       <button type="button" className={primaryBtn} disabled={isPending} onClick={save}>
         {isPending ? "Speichere …" : isNew ? "Wohnung anlegen" : "Speichern"}
