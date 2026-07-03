@@ -20,6 +20,7 @@ import {
   type RetreatCard,
 } from '@/data/retreats';
 import type { Strings } from '@/lib/strings/de';
+import { STRINGS } from '@/lib/i18n/strings';
 import { createClient } from '@/lib/supabase/server';
 import { supabaseConfigured } from '@/lib/supabase/env';
 import type { CardAccent } from '@/components/sections/ApartmentCard';
@@ -70,30 +71,52 @@ function mapRow(row: any, t: Strings): RetreatCard {
     minNights: row.min_nights as number,
     bookable: Boolean(row.bookable) && !row.sold_out,
     images: [] as string[],
-    airbnbUrl: row.airbnb_url || undefined,
+    // Bewusst NICHT ausliefern: Die Website verweist nirgends auf Airbnb —
+    // die URL bleibt reine Admin-/Sync-Information (RetreatEditor lädt die Row direkt).
+    airbnbUrl: undefined,
   };
 
   if (seededContent) {
-    // Geseedet: Text (übersetzt) aus den Strings, Reviews-Autoren aus den
-    // statischen Strukturdaten — Struktur/Preise/Flags aus der DB.
+    // Geseedet: Struktur/Preise/Flags kommen IMMER aus der DB. Beim Text gilt:
+    // ADMIN GEWINNT. Weicht der deutsche DB-Text vom ursprünglichen Seed ab,
+    // wurde er im Admin bearbeitet → DB-Text in allen Sprachen anzeigen
+    // (Übersetzung wäre sonst veraltet). Unverändert → Übersetzung aus strings.
+    const deSeed = STRINGS.de.retreatsContent[row.id];
+    const pick = (dbVal: string, seedVal: string | undefined, localized: string) =>
+      dbVal && dbVal !== (seedVal ?? '') ? dbVal : localized;
+
+    const amenitiesEdited =
+      JSON.stringify(row.amenities_de ?? []) !== JSON.stringify(deSeed?.amenities ?? []);
+
     return {
       ...base,
-      name: seededContent.name,
-      highlight: seededContent.highlight,
-      tagline: seededContent.tagline,
-      shortDescription: seededContent.shortDescription,
-      description: seededContent.description,
-      usps: dbUsps.map((u, i) => ({
-        icon: u.icon as UspIconKey,
-        title: seededContent.usps[i]?.title ?? u.title_de,
-        text: seededContent.usps[i]?.text ?? u.text_de,
-      })),
+      name: pick(row.name_de, deSeed?.name, seededContent.name),
+      highlight: pick(row.highlight_de, deSeed?.highlight, seededContent.highlight),
+      tagline: pick(row.tagline_de, deSeed?.tagline, seededContent.tagline) || undefined,
+      shortDescription: pick(
+        row.short_description_de,
+        deSeed?.shortDescription,
+        seededContent.shortDescription,
+      ),
+      description: pick(row.description_de, deSeed?.description, seededContent.description),
+      usps: dbUsps.map((u, i) => {
+        const seedUsp = deSeed?.usps[i];
+        const edited =
+          u.title_de !== (seedUsp?.title ?? '') || (u.text_de ?? '') !== (seedUsp?.text ?? '');
+        return {
+          icon: u.icon as UspIconKey,
+          title: edited ? u.title_de : (seededContent.usps[i]?.title ?? u.title_de),
+          text: edited ? u.text_de : (seededContent.usps[i]?.text ?? u.text_de),
+        };
+      }),
       reviews: staticStruct?.reviews?.map((rv, i) => ({
         author: rv.author,
         date: seededContent.reviews[i]?.date ?? '',
         text: seededContent.reviews[i]?.text ?? '',
       })),
-      amenities: seededContent.amenities,
+      amenities: amenitiesEdited
+        ? ((row.amenities_de ?? []) as string[])
+        : seededContent.amenities,
     };
   }
 

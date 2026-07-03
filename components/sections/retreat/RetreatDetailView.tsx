@@ -121,23 +121,13 @@ export function RetreatDetailView({ retreat }: { retreat: RetreatCard }) {
           />
 
           {bookable && (
-            <div className="mt-9 flex flex-wrap items-center gap-4">
+            <div className="mt-9">
               <Link
                 href={`/buchen/${retreat.slug}`}
                 className="inline-flex items-center justify-center rounded-[3px] bg-brass-400 px-8 py-4 font-body text-xs font-semibold uppercase tracking-[0.18em] text-night transition-colors duration-300 hover:bg-brass-300"
               >
                 {t.detail.book}
               </Link>
-              {retreat.airbnbUrl && (
-                <a
-                  href={retreat.airbnbUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-[3px] border border-cream-50/40 px-6 py-4 font-body text-xs font-semibold uppercase tracking-[0.18em] text-cream-50 transition-colors duration-300 hover:bg-cream-50/10"
-                >
-                  {strings.bookingFlow.alsoOnAirbnb}
-                </a>
-              )}
             </div>
           )}
         </div>
@@ -227,30 +217,14 @@ export function RetreatDetailView({ retreat }: { retreat: RetreatCard }) {
               <Type role="lead" className="mx-auto mt-7 max-w-xl text-cream-100/85">
                 {t.detail.bookText}
               </Type>
-              <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+              <div className="mt-10">
                 <Link
                   href={`/buchen/${retreat.slug}`}
                   className="inline-flex items-center justify-center rounded-[3px] bg-brass-400 px-8 py-4 font-body text-xs font-semibold uppercase tracking-[0.18em] text-night transition-colors duration-300 hover:bg-brass-300"
                 >
                   {t.detail.book}
                 </Link>
-                {retreat.airbnbUrl && (
-                  <a
-                    href={retreat.airbnbUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center rounded-[3px] border border-cream-50/40 px-6 py-4 font-body text-xs font-semibold uppercase tracking-[0.18em] text-cream-50 transition-colors duration-300 hover:bg-cream-50/10"
-                  >
-                    {strings.bookingFlow.alsoOnAirbnb}
-                  </a>
-                )}
               </div>
-              <Type
-                role="caption"
-                className="mt-7 font-medium uppercase tracking-[0.18em] text-cream-100/55"
-              >
-                {t.detail.note}
-              </Type>
             </Reveal>
           </section>
         )}
