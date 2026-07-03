@@ -71,9 +71,9 @@ function mapRow(row: any, t: Strings): RetreatCard {
     minNights: row.min_nights as number,
     bookable: Boolean(row.bookable) && !row.sold_out,
     images: [] as string[],
-    // Bewusst NICHT ausliefern: Die Website verweist nirgends auf Airbnb —
-    // die URL bleibt reine Admin-/Sync-Information (RetreatEditor lädt die Row direkt).
-    airbnbUrl: undefined,
+    // Bewusst KEIN airbnbUrl-Feld: Die Website verweist nirgends auf Airbnb —
+    // die URL bleibt reine Admin-/Sync-Information (RetreatEditor lädt die Row
+    // direkt). Auch der Feldname soll nicht im RSC-Payload auftauchen.
   };
 
   if (seededContent) {
