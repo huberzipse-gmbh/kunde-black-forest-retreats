@@ -30,7 +30,7 @@ export interface GiftCard {
 
 /** Preset-Beträge im Wizard (Cent). */
 export const GIFT_PRESETS = [5000, 10000] as const;
-export const GIFT_MIN_CENTS = 2000;
+export const GIFT_MIN_CENTS = 100; // Stripe-Minimum für EUR ist 0,50 €
 export const GIFT_MAX_CENTS = 100000;
 export const GIFT_VALIDITY_YEARS = 3;
 export const GIFT_MESSAGE_MAX = 240;
