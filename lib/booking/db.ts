@@ -52,6 +52,12 @@ export function mapSettings(s: any): BookingSettings {
       percent: s.global_discount_percent != null ? Number(s.global_discount_percent) : null,
       active: s.global_discount_active,
     },
+    // Solange Migration 0007 nicht eingespielt ist, bleibt der Code inaktiv.
+    promo: {
+      code: s.promo_code ?? '',
+      percent: s.promo_percent != null ? Number(s.promo_percent) : 0,
+      active: Boolean(s.promo_active),
+    },
   };
 }
 

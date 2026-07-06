@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { getStrings } from "@/lib/i18n/server";
 import { getRetreatCardBySlug } from "@/lib/retreats/db";
@@ -6,6 +7,7 @@ import { supabaseConfigured } from "@/lib/supabase/env";
 import { createClient } from "@/lib/supabase/server";
 import { fetchBlocks, fetchPriceRules, fetchSettings } from "@/lib/booking/db";
 import { blockedNights } from "@/lib/booking/availability";
+import { PROMO_COOKIE } from "@/lib/booking/pricing";
 import { BookingWidget } from "@/components/booking/BookingWidget";
 import { NotConfiguredNotice } from "@/components/booking/NotConfiguredNotice";
 
@@ -36,12 +38,14 @@ export default async function BookingDatesPage({
   }
 
   const sb = await createClient();
-  const [settings, rules, blocks, userRes] = await Promise.all([
+  const [settings, rules, blocks, userRes, cookieStore] = await Promise.all([
     fetchSettings(sb),
     fetchPriceRules(sb, retreat.id),
     fetchBlocks(sb, retreat.id),
     sb.auth.getUser(),
+    cookies(),
   ]);
+  const promoCode = cookieStore.get(PROMO_COOKIE)?.value ?? null;
 
   return (
     <BookingWidget
@@ -60,6 +64,7 @@ export default async function BookingDatesPage({
       settings={settings}
       blockedNights={[...blockedNights(blocks)]}
       isRegistered={Boolean(userRes.data?.user)}
+      promoCode={promoCode}
     />
   );
 }

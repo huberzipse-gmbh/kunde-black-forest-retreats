@@ -6,12 +6,13 @@
  * Client-Werte sind reine Anzeige.
  */
 import { z } from 'zod';
+import { cookies } from 'next/headers';
 import { addDays, differenceInCalendarDays, format } from 'date-fns';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { createClient } from '@/lib/supabase/server';
 import { supabaseAdminConfigured } from '@/lib/supabase/env';
 import { getLocale } from '@/lib/i18n/server';
-import { computeQuote } from './pricing';
+import { computeQuote, PROMO_COOKIE } from './pricing';
 import { isRangeFree } from './availability';
 import { fetchBlocks, fetchPriceRules, fetchSettings, mapBooking } from './db';
 import { generateBookingNumber } from './bookingNumber';
@@ -92,6 +93,9 @@ export async function createBooking(raw: CreateBookingInput): Promise<CreateBook
     const { data: userData } = await supa.auth.getUser();
     const user = userData?.user ?? null;
 
+    // Eingelöster Rabattcode (Cookie) — computeQuote validiert gegen Settings.
+    const promoCode = (await cookies()).get(PROMO_COOKIE)?.value ?? null;
+
     const quote = computeQuote({
       retreat: {
         id: retreatRow.id,
@@ -103,6 +107,7 @@ export async function createBooking(raw: CreateBookingInput): Promise<CreateBook
       checkIn: input.checkIn,
       checkOut: input.checkOut,
       isRegistered: Boolean(user),
+      promoCode,
     });
 
     // „Später zahlen" nur, wenn die Anreise weit genug entfernt ist.

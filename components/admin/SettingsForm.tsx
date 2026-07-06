@@ -105,6 +105,41 @@ export function SettingsForm({ initial }: { initial: SettingsFormData }) {
         </label>
       </div>
 
+      {/* Rabattcode (Aufsteller/QR) */}
+      <div className={card}>
+        <h2 className="font-body text-xs font-semibold uppercase tracking-wider text-forest-700/60">
+          Rabattcode (Pappaufsteller / QR)
+        </h2>
+        <p className="mt-2 font-body text-xs text-forest-700/55">
+          Gäste lösen den Code per QR-Scan oder Eingabe im Buchungsflow ein. Der Rabatt gilt
+          prozentual auf den Übernachtungspreis. QR-Link: blackforest-retreats.de/aktion/&lt;Code&gt;
+        </p>
+        <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-4">
+          <div className="col-span-2">
+            <label className={label}>Code</label>
+            <input
+              className={`${input} uppercase`}
+              value={form.promo_code}
+              onChange={(e) => set({ promo_code: e.target.value.toUpperCase() })}
+              placeholder="z. B. BFR10"
+            />
+          </div>
+          <div>
+            <label className={label}>Rabatt (%)</label>
+            <input
+              className={input}
+              inputMode="decimal"
+              value={String(form.promo_percent).replace(".", ",")}
+              onChange={(e) => set({ promo_percent: num(e.target.value) })}
+            />
+          </div>
+        </div>
+        <label className="mt-4 flex cursor-pointer items-center gap-2 font-body text-sm text-forest-900">
+          <input type="checkbox" checked={form.promo_active} onChange={(e) => set({ promo_active: e.target.checked })} className="h-4 w-4 accent-forest-900" />
+          Code ist aktiv
+        </label>
+      </div>
+
       {/* Rechnungsaussteller */}
       <div className={card}>
         <h2 className="font-body text-xs font-semibold uppercase tracking-wider text-forest-700/60">

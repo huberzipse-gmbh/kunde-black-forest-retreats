@@ -10,12 +10,13 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useLocale, useStrings } from "@/lib/i18n/I18nProvider";
 import { fmtNum } from "@/lib/i18n/format";
-import { computeQuote } from "@/lib/booking/pricing";
+import { computeQuote, promoMatches } from "@/lib/booking/pricing";
 import type { BookingSettings, PriceRule } from "@/lib/booking/types";
 import { Type } from "@/components/ui/Type";
 import { AvailabilityCalendar, type CalendarSelection } from "./AvailabilityCalendar";
 import { GuestSelector, type GuestSelection } from "./GuestSelector";
 import { GoodPriceBadge, NightlyPrice, PriceBreakdown } from "./PriceBreakdown";
+import { PromoCodeField } from "./PromoCodeField";
 
 export interface BookingWidgetRetreat {
   id: string;
@@ -35,9 +36,11 @@ interface Props {
   settings: BookingSettings;
   blockedNights: string[];
   isRegistered: boolean;
+  /** Eingelöster Rabattcode aus dem Cookie (Validierung in computeQuote). */
+  promoCode: string | null;
 }
 
-export function BookingWidget({ retreat, rules, settings, blockedNights, isRegistered }: Props) {
+export function BookingWidget({ retreat, rules, settings, blockedNights, isRegistered, promoCode }: Props) {
   const strings = useStrings();
   const t = strings.bookingFlow;
   const locale = useLocale();
@@ -60,11 +63,12 @@ export function BookingWidget({ retreat, rules, settings, blockedNights, isRegis
         checkIn: selection.checkIn,
         checkOut: selection.checkOut,
         isRegistered,
+        promoCode,
       });
     } catch {
       return null;
     }
-  }, [selection, retreat, rules, settings, isRegistered]);
+  }, [selection, retreat, rules, settings, isRegistered, promoCode]);
 
   // Vorschau des Nachtpreises auch ohne Auswahl (heutiger Tag als Referenz).
   const previewQuote = useMemo(() => {
@@ -191,6 +195,15 @@ export function BookingWidget({ retreat, rules, settings, blockedNights, isRegis
           {quote && (
             <div className="mt-5 border-t border-forest-900/10 pt-5">
               <PriceBreakdown quote={quote} />
+            </div>
+          )}
+
+          {settings.promo.active && settings.promo.percent > 0 && (
+            <div className="mt-5 border-t border-forest-900/10 pt-5">
+              <PromoCodeField
+                activeCode={promoMatches(settings, promoCode) ? settings.promo.code.toUpperCase() : null}
+                percent={settings.promo.percent}
+              />
             </div>
           )}
 

@@ -66,11 +66,17 @@ export interface BookingSettings {
     percent: number | null;
     active: boolean;
   };
+  /** Rabattcode (Pappaufsteller/QR): prozentual auf den Übernachtungspreis. */
+  promo: {
+    code: string;
+    percent: number;
+    active: boolean;
+  };
 }
 
 /** Eine Zeile der Preisaufschlüsselung (wie bei Airbnb). */
 export interface QuoteLine {
-  kind: 'nights' | 'discount' | 'cleaning' | 'registered';
+  kind: 'nights' | 'discount' | 'promo' | 'cleaning' | 'registered';
   label: string;
   amountCents: number; // Rabatte negativ
 }

@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  /* A5 hoch + 3 mm Beschnitt umlaufend = 154 × 216 mm */
+  :root {
+    --night: #0f1813;
+    --forest-900: #1b2a21;
+    --forest-800: #22332a;
+    --forest-300: #9bb4a3;
+    --cream-50: #faf7f1;
+    --cream-100: #f3ede2;
+    --cream-300: #ddd2c0;
+    --brass-300: #d8bd85;
+    --brass-400: #c9a96a;
+    --brass-600: #a6863f;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 154mm; height: 216mm; }
+  body {
+    font-family: "Plus Jakarta Sans", sans-serif;
+    background: var(--forest-900);
+    color: var(--cream-50);
+    position: relative;
+    overflow: hidden;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ── Foto oben ─────────────────────────────────────────── */
+  .photo {
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 96mm;
+    background-image: url("__PHOTO__");
+    background-size: cover;
+    background-position: center 62%;
+  }
+  .photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(15, 24, 19, 0.30) 0%,
+      rgba(15, 24, 19, 0.02) 30%,
+      rgba(27, 42, 33, 0.00) 55%,
+      rgba(27, 42, 33, 0.55) 82%,
+      var(--forest-900) 100%
+    );
+  }
+
+  /* Wortmarke oben im Foto */
+  .brand {
+    position: absolute;
+    top: 11mm;
+    left: 0; right: 0;
+    text-align: center;
+    z-index: 2;
+  }
+  .brand .name {
+    font-family: "Fraunces", serif;
+    font-weight: 500;
+    font-size: 17pt;
+    letter-spacing: 0.02em;
+    color: var(--cream-50);
+    text-shadow: 0 1px 14px rgba(15, 24, 19, 0.55);
+  }
+  .brand .place {
+    margin-top: 1.6mm;
+    font-size: 7pt;
+    font-weight: 600;
+    letter-spacing: 0.42em;
+    text-indent: 0.42em; /* zentriert trotz Letterspacing */
+    text-transform: uppercase;
+    color: var(--cream-100);
+    text-shadow: 0 1px 10px rgba(15, 24, 19, 0.6);
+  }
+
+  /* ── Textteil ──────────────────────────────────────────── */
+  .content {
+    position: absolute;
+    top: 92mm;
+    left: 14mm;
+    right: 14mm;
+    text-align: center;
+    z-index: 2;
+  }
+  .eyebrow {
+    font-size: 7.5pt;
+    font-weight: 700;
+    letter-spacing: 0.34em;
+    text-indent: 0.34em;
+    text-transform: uppercase;
+    color: var(--brass-300);
+  }
+  h1 {
+    margin-top: 5mm;
+    font-family: "Fraunces", serif;
+    font-weight: 500;
+    font-size: 27pt;
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    color: var(--cream-50);
+  }
+  .body-text {
+    margin: 5.5mm auto 0;
+    max-width: 104mm;
+    font-size: 10pt;
+    line-height: 1.62;
+    color: var(--cream-300);
+  }
+  .body-text strong { color: var(--cream-50); font-weight: 600; }
+
+  /* ── QR + Code ─────────────────────────────────────────── */
+  .redeem {
+    position: absolute;
+    left: 0; right: 0;
+    bottom: 26mm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9mm;
+    z-index: 2;
+  }
+  .qr-card {
+    background: var(--cream-50);
+    border-radius: 2.4mm;
+    padding: 3.4mm;
+    line-height: 0;
+    box-shadow: 0 4mm 10mm rgba(0, 0, 0, 0.28);
+  }
+  .qr-card svg { width: 30mm; height: 30mm; display: block; }
+  .redeem .divider {
+    width: 0.35mm;
+    height: 26mm;
+    background: rgba(250, 247, 241, 0.18);
+  }
+  .code-side { text-align: left; }
+  .code-side .label {
+    font-size: 7pt;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--forest-300);
+  }
+  .code-chip {
+    margin-top: 2.6mm;
+    display: inline-block;
+    border: 0.5mm solid var(--brass-400);
+    border-radius: 1.8mm;
+    padding: 2.6mm 6mm;
+    font-size: 19pt;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--brass-300);
+  }
+  .code-side .hint {
+    margin-top: 2.8mm;
+    font-size: 7.5pt;
+    line-height: 1.5;
+    color: var(--cream-300);
+    max-width: 44mm;
+  }
+
+  /* ── Fußzeile ──────────────────────────────────────────── */
+  .footer {
+    position: absolute;
+    left: 0; right: 0;
+    bottom: 11mm;
+    text-align: center;
+    z-index: 2;
+  }
+  .footer .rule {
+    width: 12mm;
+    height: 0.3mm;
+    margin: 0 auto 3mm;
+    background: var(--brass-600);
+  }
+  .footer .url {
+    font-size: 9pt;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--cream-100);
+  }
+</style>
+</head>
+<body>
+  <div class="photo"></div>
+
+  <div class="brand">
+    <div class="name">Black Forest Retreats</div>
+    <div class="place">Neuenbürg</div>
+  </div>
+
+  <div class="content">
+    <div class="eyebrow">Für deinen nächsten Besuch</div>
+    <h1>Nächstes Mal<br />10&nbsp;% günstiger.</h1>
+    <p class="body-text">
+      Hat es dir bei uns gefallen? Dann buch deinen nächsten Aufenthalt
+      direkt auf unserer Website. Mit dem Code <strong>BFR10</strong> sparst
+      du <strong>10&nbsp;% auf jede Nacht</strong>.
+    </p>
+  </div>
+
+  <div class="redeem">
+    <div class="qr-card">__QR__</div>
+    <div class="divider"></div>
+    <div class="code-side">
+      <div class="label">Dein Code</div>
+      <div class="code-chip">BFR10</div>
+      <p class="hint">QR-Code scannen, der Rabatt zieht automatisch bei der Buchung.</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="rule"></div>
+    <div class="url">blackforest-retreats.de</div>
+  </div>
+</body>
+</html>

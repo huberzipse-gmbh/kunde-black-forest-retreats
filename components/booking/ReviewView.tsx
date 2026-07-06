@@ -31,6 +31,8 @@ interface Props {
   payLaterPossible: boolean;
   cancellationDays: number;
   initialUser: { email: string } | null;
+  /** Eingelöster Rabattcode aus dem Cookie (Validierung in computeQuote). */
+  promoCode: string | null;
 }
 
 type AuthMode = "guest" | "login" | "register";
@@ -47,6 +49,7 @@ export function ReviewView({
   payLaterPossible,
   cancellationDays,
   initialUser,
+  promoCode,
 }: Props) {
   const strings = useStrings();
   const t = strings.bookingFlow;
@@ -76,8 +79,9 @@ export function ReviewView({
         checkIn,
         checkOut,
         isRegistered: Boolean(user),
+        promoCode,
       }),
-    [retreat, rules, settings, checkIn, checkOut, user],
+    [retreat, rules, settings, checkIn, checkOut, user, promoCode],
   );
 
   const editHref = `/buchen/${retreat.slug}`;

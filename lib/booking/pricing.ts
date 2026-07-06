@@ -84,10 +84,22 @@ export interface QuoteInput {
   checkIn: string;  // ISO date
   checkOut: string; // ISO date (exklusiv)
   isRegistered: boolean;
+  /** Vom Gast eingelöster Rabattcode (QR/Aufsteller) — Validierung hier. */
+  promoCode?: string | null;
+}
+
+/** Cookie-Name des eingelösten Rabattcodes (hier, weil 'use server'-Module nur Funktionen exportieren). */
+export const PROMO_COOKIE = 'bfr_promo';
+
+/** Gültiger, aktiver Rabattcode? (Vergleich case-insensitiv, getrimmt) */
+export function promoMatches(settings: BookingSettings, code: string | null | undefined): boolean {
+  const p = settings.promo;
+  if (!p.active || p.percent <= 0 || !p.code) return false;
+  return (code ?? '').trim().toUpperCase() === p.code.trim().toUpperCase();
 }
 
 export function computeQuote(input: QuoteInput): PriceQuote {
-  const { retreat, rules, settings, checkIn, checkOut, isRegistered } = input;
+  const { retreat, rules, settings, checkIn, checkOut, isRegistered, promoCode } = input;
   const nights = differenceInCalendarDays(new Date(checkOut), new Date(checkIn));
   if (nights <= 0) throw new Error('Ungültiger Zeitraum: checkOut muss nach checkIn liegen.');
 
@@ -111,6 +123,15 @@ export function computeQuote(input: QuoteInput): PriceQuote {
       ([name, cents]): QuoteLine => ({ kind: 'discount', label: name, amountCents: -cents }),
     ),
   ];
+
+  // Rabattcode: prozentual auf den Übernachtungspreis nach benannten Rabatten.
+  if (promoMatches(settings, promoCode)) {
+    const cut = Math.min(subtotal, Math.round((subtotal * settings.promo.percent) / 100));
+    if (cut > 0) {
+      lines.push({ kind: 'promo', label: settings.promo.code.trim().toUpperCase(), amountCents: -cut });
+      subtotal -= cut;
+    }
+  }
 
   let total = subtotal;
   const cleaning = retreat.cleaningFeeCents;

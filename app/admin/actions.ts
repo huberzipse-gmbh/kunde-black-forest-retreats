@@ -266,6 +266,13 @@ const settingsSchema = z.object({
   global_discount_amount_cents: z.number().int().min(0).nullable(),
   global_discount_percent: z.number().min(0).max(100).nullable(),
   global_discount_active: z.boolean(),
+  promo_code: z
+    .string()
+    .trim()
+    .max(40)
+    .transform((v) => v.toUpperCase()),
+  promo_percent: z.number().min(0).max(100),
+  promo_active: z.boolean(),
 });
 
 export type SettingsFormData = z.infer<typeof settingsSchema>;

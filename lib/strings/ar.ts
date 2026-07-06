@@ -701,6 +701,18 @@ export const ar: Strings = {
       inclVat: (rate: string) => `شامل ضريبة القيمة المضافة ${rate}%`,
       goodPrice: 'سعر جيّد: تواريخك ضمن المتوسط الأدنى لآخر 60 يومًا.',
       details: 'تفاصيل السعر',
+      promoLine: (code: string) => `رمز الخصم ${code}`,
+    },
+    promo: {
+      title: 'رمز الخصم',
+      placeholder: 'أدخل الرمز',
+      apply: 'تفعيل',
+      applied: (code: string, pct: string) => `الرمز ${code} مفعّل: خصم ${pct}% على سعر الليلة.`,
+      invalid: 'عذرًا، هذا الرمز غير صالح.',
+      remove: 'إزالة',
+      banner: (pct: string) => `اختيار موفّق بالحجز المباشر: خصم ${pct}% على سعر الليلة محفوظ لك.`,
+      bannerCta: 'اختر شقتك',
+      close: 'إغلاق',
     },
     cta: {
       checkAvailability: 'تحقّق من التوفر',

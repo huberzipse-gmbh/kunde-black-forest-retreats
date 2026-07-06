@@ -699,6 +699,20 @@ export const en: Strings = {
       inclVat: (rate: string) => `incl. ${rate}% VAT`,
       goodPrice: 'Good price: your dates sit in the lower average of the last 60 days.',
       details: 'Price breakdown',
+      promoLine: (code: string) => `Discount code ${code}`,
+    },
+    promo: {
+      title: 'Discount code',
+      placeholder: 'Enter code',
+      apply: 'Apply',
+      applied: (code: string, pct: string) =>
+        `Code ${code} active: ${pct}% off the nightly rate.`,
+      invalid: 'Sorry, this code is not valid.',
+      remove: 'Remove',
+      banner: (pct: string) =>
+        `Good call booking direct: ${pct}% off the nightly rate is saved for you.`,
+      bannerCta: 'Pick your apartment',
+      close: 'Close',
     },
     cta: {
       checkAvailability: 'Check availability',

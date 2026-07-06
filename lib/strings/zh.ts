@@ -697,6 +697,18 @@ export const zh: Strings = {
       inclVat: (rate: string) => `含 ${rate}% 增值税`,
       goodPrice: '好价格：您选的日期处于近 60 天的较低均价区间。',
       details: '价格明细',
+      promoLine: (code: string) => `优惠码 ${code}`,
+    },
+    promo: {
+      title: '优惠码',
+      placeholder: '输入优惠码',
+      apply: '使用',
+      applied: (code: string, pct: string) => `优惠码 ${code} 已生效：住宿费立减 ${pct}%。`,
+      invalid: '抱歉，此优惠码无效。',
+      remove: '移除',
+      banner: (pct: string) => `感谢直接预订：已为您保存住宿费 ${pct}% 的折扣。`,
+      bannerCta: '挑选公寓',
+      close: '关闭',
     },
     cta: {
       checkAvailability: '查看空房',

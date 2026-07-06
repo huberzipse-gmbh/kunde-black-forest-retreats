@@ -29,6 +29,9 @@ export default async function AdminSettingsPage() {
           global_discount_percent:
             data.global_discount_percent != null ? Number(data.global_discount_percent) : null,
           global_discount_active: data.global_discount_active,
+          promo_code: data.promo_code ?? "",
+          promo_percent: data.promo_percent != null ? Number(data.promo_percent) : 0,
+          promo_active: Boolean(data.promo_active),
         }}
       />
     </div>

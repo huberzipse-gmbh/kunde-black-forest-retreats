@@ -703,6 +703,20 @@ export const de = {
       inclVat: (rate: string) => `inkl. ${rate} % MwSt.`,
       goodPrice: 'Guter Preis: Dein Zeitraum liegt im unteren Durchschnitt der letzten 60 Tage.',
       details: 'Preisaufschlüsselung',
+      promoLine: (code: string) => `Rabattcode ${code}`,
+    },
+    promo: {
+      title: 'Rabattcode',
+      placeholder: 'Code eingeben',
+      apply: 'Einlösen',
+      applied: (code: string, pct: string) =>
+        `Code ${code} aktiv: ${pct} % auf den Übernachtungspreis.`,
+      invalid: 'Dieser Code ist leider nicht gültig.',
+      remove: 'Entfernen',
+      banner: (pct: string) =>
+        `Schön, dass du direkt buchst: ${pct} % Rabatt auf den Übernachtungspreis sind für dich hinterlegt.`,
+      bannerCta: 'Wohnung aussuchen',
+      close: 'Schließen',
     },
     cta: {
       checkAvailability: 'Verfügbarkeit prüfen',

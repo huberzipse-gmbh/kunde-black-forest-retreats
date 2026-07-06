@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { differenceInCalendarDays } from "date-fns";
 import { getStrings } from "@/lib/i18n/server";
@@ -5,6 +6,7 @@ import { getRetreatCardBySlug } from "@/lib/retreats/db";
 import { supabaseConfigured } from "@/lib/supabase/env";
 import { createClient } from "@/lib/supabase/server";
 import { fetchPriceRules, fetchSettings } from "@/lib/booking/db";
+import { PROMO_COOKIE } from "@/lib/booking/pricing";
 import { ReviewView } from "@/components/booking/ReviewView";
 import { NotConfiguredNotice } from "@/components/booking/NotConfiguredNotice";
 
@@ -40,11 +42,13 @@ export default async function BookingReviewPage({
   const infants = num(sp.infants, 0);
 
   const sb = await createClient();
-  const [settings, rules, userRes] = await Promise.all([
+  const [settings, rules, userRes, cookieStore] = await Promise.all([
     fetchSettings(sb),
     fetchPriceRules(sb, retreat.id),
     sb.auth.getUser(),
+    cookies(),
   ]);
+  const promoCode = cookieStore.get(PROMO_COOKIE)?.value ?? null;
 
   const payLaterPossible =
     differenceInCalendarDays(new Date(checkIn), new Date()) > settings.payLaterWindowDays;
@@ -74,6 +78,7 @@ export default async function BookingReviewPage({
       payLaterPossible={payLaterPossible}
       cancellationDays={cancellationDays}
       initialUser={user?.email ? { email: user.email } : null}
+      promoCode={promoCode}
     />
   );
 }
