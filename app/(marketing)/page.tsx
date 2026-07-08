@@ -7,6 +7,7 @@ import { FactDecor } from "@/components/sections/FactDecor";
 import { GiftVoucher } from "@/components/sections/GiftVoucher";
 import { ApartmentsPreview } from "@/components/sections/ApartmentsPreview";
 import { RegionMap } from "@/components/sections/RegionMap";
+import { ContactForm } from "@/components/sections/ContactForm";
 import { PromoBanner } from "@/components/sections/PromoBanner";
 import { getStrings } from "@/lib/i18n/server";
 import { getRetreatCards } from "@/lib/retreats/db";
@@ -33,6 +34,7 @@ export default async function HomePage() {
       <GiftVoucher />
       <ApartmentsPreview />
       <SchwarzwaldFact factKey="fact2" bgImage="/images/elemente/mischwald.jpg" nowrapFirst />
+      <ContactForm />
       <RegionMap />
     </>
   );

@@ -140,6 +140,14 @@ export function SiteHeader() {
               {t.nav[item.key]}
             </a>
           ))}
+          <a
+            href="/#kontakt"
+            onClick={() => setOpen(false)}
+            className="mt-6 font-body text-xs font-medium uppercase tracking-[0.28em] text-cream-100/70 transition-colors duration-300 hover:text-brass-300"
+            style={{ transitionDelay: open ? `${120 + NAV.length * 60}ms` : "0ms" }}
+          >
+            {t.nav.contact}
+          </a>
           <span className="mt-10 font-body text-[0.62rem] font-medium uppercase tracking-[0.34em] text-cream-100/50">
             {t.park.name}
           </span>

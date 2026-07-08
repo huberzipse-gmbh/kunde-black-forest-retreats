@@ -19,6 +19,7 @@ export const en: Strings = {
     surroundings: 'Surroundings',
     gift: 'Gift card',
     about: 'About us',
+    contact: 'Contact',
     book: 'Book',
     menu: 'Menu',
     close: 'Close',
@@ -203,6 +204,33 @@ export const en: Strings = {
     text: 'A gift card for a few days in the Black Forest. Choose the value freely, redeemable for any home, all year round.',
     cta: 'Buy a gift card',
     trust: 'Instant by email · valid for 3 years · free choice of value',
+  },
+
+  contact: {
+    eyebrow: 'Say hello',
+    title: 'One word is enough',
+    text: 'Ask about open dates, tell us what you are looking forward to, or just say hello. We usually reply the same day.',
+    form: {
+      name: 'Name',
+      namePlaceholder: 'What should we call you?',
+      email: 'Email',
+      emailPlaceholder: 'name@example.com',
+      phone: 'Phone',
+      phoneOptional: 'optional',
+      phonePlaceholder: 'For a quick call',
+      message: 'Message',
+      messagePlaceholder: 'Tell us what you have in mind.',
+      submit: 'Send message',
+      sending: 'Sending …',
+    },
+    success: {
+      title: 'Received.',
+      text: 'Thank you for your message. We will get back to you soon, usually the same day.',
+    },
+    error: 'That did not go through. Please try again in a moment or email us directly.',
+    privacy: 'By sending, you agree to our',
+    privacyLink: 'privacy policy',
+    privacyAfter: '.',
   },
 
   apartmentsPreview: {

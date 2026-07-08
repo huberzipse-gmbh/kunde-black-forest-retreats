@@ -19,6 +19,7 @@ export const zh: Strings = {
     surroundings: '周边',
     gift: '礼券',
     about: '关于我们',
+    contact: '联系',
     book: '预订',
     menu: '菜单',
     close: '关闭',
@@ -203,6 +204,33 @@ export const zh: Strings = {
     text: '一张礼券，换来黑森林里的几日时光。金额自定，任意公寓均可使用，全年有效。',
     cta: '购买礼券',
     trust: '邮件即时送达 · 有效期 3 年 · 金额自定',
+  },
+
+  contact: {
+    eyebrow: '来说声你好',
+    title: '一句话就够',
+    text: '问问空档日期，告诉我们你的期待，或只是打个招呼。我们通常当天回复。',
+    form: {
+      name: '姓名',
+      namePlaceholder: '怎么称呼你？',
+      email: '邮箱',
+      emailPlaceholder: 'name@example.com',
+      phone: '电话',
+      phoneOptional: '选填',
+      phonePlaceholder: '方便时快速联系',
+      message: '留言',
+      messagePlaceholder: '告诉我们你的想法。',
+      submit: '发送留言',
+      sending: '发送中 …',
+    },
+    success: {
+      title: '已收到。',
+      text: '感谢你的留言。我们会尽快回复，通常当天。',
+    },
+    error: '发送未成功。请稍后再试，或直接给我们发邮件。',
+    privacy: '发送即表示你同意我们的',
+    privacyLink: '隐私政策',
+    privacyAfter: '。',
   },
 
   apartmentsPreview: {

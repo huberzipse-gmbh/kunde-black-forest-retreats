@@ -22,6 +22,7 @@ export const de = {
     surroundings: 'Umgebung',
     gift: 'Gutschein',
     about: 'Über uns',
+    contact: 'Kontakt',
     book: 'Buchen',
     menu: 'Menü',
     close: 'Schließen',
@@ -206,6 +207,33 @@ export const de = {
     text: 'Ein Gutschein für ein paar Tage im Schwarzwald. Frei wählbarer Wert, einlösbar für jede Wohnung, das ganze Jahr.',
     cta: 'Gutschein kaufen',
     trust: 'Sofort per E-Mail · 3 Jahre gültig · frei wählbarer Wert',
+  },
+
+  contact: {
+    eyebrow: 'Schreib uns',
+    title: 'Ein Wort genügt',
+    text: 'Frag nach freien Terminen, sag uns, worauf du dich freust, oder bleib einfach hallo. Wir melden uns, meist noch am selben Tag.',
+    form: {
+      name: 'Name',
+      namePlaceholder: 'Wie dürfen wir dich nennen?',
+      email: 'E-Mail',
+      emailPlaceholder: 'name@beispiel.de',
+      phone: 'Telefon',
+      phoneOptional: 'optional',
+      phonePlaceholder: 'Für den kurzen Draht',
+      message: 'Nachricht',
+      messagePlaceholder: 'Erzähl uns, was dir vorschwebt.',
+      submit: 'Nachricht senden',
+      sending: 'Wird gesendet …',
+    },
+    success: {
+      title: 'Angekommen.',
+      text: 'Danke für deine Nachricht. Wir melden uns bald bei dir, meist noch am selben Tag.',
+    },
+    error: 'Das hat nicht geklappt. Versuch es gleich noch einmal oder schreib uns direkt eine E-Mail.',
+    privacy: 'Mit dem Absenden stimmst du unserer',
+    privacyLink: 'Datenschutzerklärung',
+    privacyAfter: 'zu.',
   },
 
   apartmentsPreview: {

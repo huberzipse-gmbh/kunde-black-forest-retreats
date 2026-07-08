@@ -8,8 +8,7 @@ export const metadata: Metadata = {
 };
 
 // HINWEIS: Vor dem Live-Gang die mit [ ... ] markierten Pflichtangaben durch
-// die echten Daten ersetzen (E-Mail, Telefon, USt-IdNr, ggf. weitere
-// Geschäftsführer). Ohne korrekte E-Mail ist das Impressum unvollständig.
+// die echten Daten ersetzen (USt-IdNr, ggf. weitere Geschäftsführer).
 
 export default function ImpressumPage() {
   return (
@@ -30,9 +29,9 @@ export default function ImpressumPage() {
 
       <h3>Kontakt</h3>
       <p>
-        Telefon: [BITTE TELEFONNUMMER EINTRAGEN]
+        Telefon: +49 160 3756052
         <br />
-        E-Mail: [BITTE E-MAIL-ADRESSE EINTRAGEN]
+        E-Mail: blackforestretreats@gmail.com
       </p>
 
       <h3>Registereintrag</h3>

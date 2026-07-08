@@ -14,6 +14,8 @@ export interface SendEmailInput {
   html: string;
   bookingId?: string | null;
   attachments?: { filename: string; content: Buffer }[];
+  /** Antwortadresse — z. B. beim Kontaktformular die E-Mail des Absenders. */
+  replyTo?: string;
 }
 
 export function emailMode(): 'resend' | 'demo' {
@@ -31,6 +33,7 @@ export async function sendEmail(input: SendEmailInput): Promise<{ ok: boolean; e
       const { data, error: resendError } = await resend.emails.send({
         from: process.env.EMAIL_FROM ?? 'Black Forest Retreats <onboarding@resend.dev>',
         to: input.to,
+        replyTo: input.replyTo,
         subject: input.subject,
         html: input.html,
         attachments: input.attachments?.map((a) => ({
