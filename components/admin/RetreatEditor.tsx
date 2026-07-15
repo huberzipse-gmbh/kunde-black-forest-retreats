@@ -23,6 +23,7 @@ import {
 import type { PriceRule } from "@/lib/booking/types";
 import { dateDe, eur } from "@/lib/admin/format";
 import { DeleteRetreatButton } from "@/components/admin/DeleteRetreatButton";
+import { RetreatVisibilityButton } from "@/components/admin/RetreatVisibilityButton";
 import { AdminCalendar } from "@/components/admin/AdminCalendar";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -87,7 +88,12 @@ export function RetreatEditor({ retreat, rules, blocks, exportUrl }: Props) {
         <h1 className="font-display text-3xl text-forest-900">
           {isNew ? "Neue Wohnung" : retreat.name_de}
         </h1>
-        {!isNew && <DeleteRetreatButton retreatId={retreat.id} name={retreat.name_de} />}
+        {!isNew && (
+          <div className="flex flex-wrap items-start gap-3">
+            <RetreatVisibilityButton retreatId={retreat.id} hidden={Boolean(retreat.hidden)} />
+            <DeleteRetreatButton retreatId={retreat.id} name={retreat.name_de} />
+          </div>
+        )}
       </div>
 
       <div className="mt-6 flex flex-wrap gap-2">
@@ -310,7 +316,6 @@ function MasterDataTab({ retreat, onSaved }: { retreat: any | null; onSaved: (ms
               ["Denkmalgeschützt", "heritage"],
               ["Buchbar", "bookable"],
               ["Ausgebucht", "sold_out"],
-              ["Ausgeblendet (nicht auf der Website)", "hidden"],
             ] as const
           ).map(([lbl, key]) => (
             <label key={key} className="flex cursor-pointer items-center gap-2 font-body text-sm text-forest-900">

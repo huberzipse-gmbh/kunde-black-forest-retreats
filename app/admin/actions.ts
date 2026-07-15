@@ -182,6 +182,28 @@ export async function upsertRetreat(raw: RetreatFormData): Promise<{ ok: boolean
   }
 }
 
+/** Wohnung sofort aus-/einblenden (ohne den ganzen Editor zu speichern). */
+export async function setRetreatHidden(
+  id: string,
+  hidden: boolean,
+): Promise<{ ok: boolean; error?: string }> {
+  await assertAdmin();
+  try {
+    const sb = createAdminClient();
+    const { error } = await sb
+      .from('retreats')
+      .update({ hidden, updated_at: new Date().toISOString() })
+      .eq('id', id);
+    if (error) return { ok: false, error: error.message };
+    // Öffentliche Seiten (Übersicht + Detailseite) aktualisieren.
+    revalidatePath('/', 'layout');
+    return { ok: true };
+  } catch (err) {
+    console.error('[admin] setRetreatHidden:', err);
+    return { ok: false, error: 'Speichern fehlgeschlagen.' };
+  }
+}
+
 /* ── Preisregeln ──────────────────────────────────────────────────────────── */
 
 const priceRuleSchema = z.object({
