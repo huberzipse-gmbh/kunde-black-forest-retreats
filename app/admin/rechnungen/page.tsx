@@ -2,6 +2,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { supabaseAdminConfigured } from "@/lib/supabase/env";
 import { AdminNotConfigured } from "@/components/admin/AdminNotConfigured";
 import { InvoiceExportList, type InvoiceListRow } from "@/components/admin/InvoiceExportList";
+import { ExportMenu } from "@/components/admin/ExportMenu";
 
 export default async function AdminInvoicesPage() {
   if (!supabaseAdminConfigured()) return <AdminNotConfigured />;
@@ -27,10 +28,15 @@ export default async function AdminInvoicesPage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl text-forest-900">Rechnungen</h1>
-      <p className="mt-2 font-body text-sm text-forest-700/70">
-        GoBD-konform: lückenlose Nummern, unveränderlich gespeichert, Storno per Stornorechnung.
-      </p>
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <h1 className="font-display text-3xl text-forest-900">Rechnungen</h1>
+          <p className="mt-2 max-w-xl font-body text-sm text-forest-700/70">
+            GoBD-konform: lückenlose Nummern, unveränderlich gespeichert, Storno per Stornorechnung.
+          </p>
+        </div>
+        <ExportMenu endpoint="/api/invoices/bulk" />
+      </div>
 
       <div className="mt-6">
         <InvoiceExportList rows={rows} />
