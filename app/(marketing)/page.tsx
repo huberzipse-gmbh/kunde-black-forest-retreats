@@ -43,7 +43,16 @@ export default async function HomePage() {
     touristDestinationSchema(
       t.hero.eyebrow,
       t.hero.subtitle,
-      ["Nationalpark Schwarzwald", "Baumwipfelpfad Bad Wildbad", "Palais Thermal", "Schloss Neuenbürg", "Enztal"],
+      // Ehrliche Standort-Zuordnung: Neuenbürg liegt im Naturpark Schwarzwald
+      // Mitte/Nord. Der Nationalpark ist ~1 Std. entfernt und damit KEIN
+      // Standort-Merkmal - bewusst nicht als Attraktion gelistet.
+      [
+        "Naturpark Schwarzwald Mitte/Nord",
+        "Schloss Neuenbürg",
+        "Baumwipfelpfad Bad Wildbad",
+        "Palais Thermal Bad Wildbad",
+        "Enztal",
+      ],
     ),
   ];
 
