@@ -7,9 +7,9 @@
  * `copyright(year)` enthalten). Die Strings werden hier client-seitig aus
  * der Registry aufgelöst — keine Funktion überquert die RSC-Grenze.
  */
-import { createContext, useContext } from "react";
+import { createContext, useCallback, useContext } from "react";
 import type { ReactNode } from "react";
-import type { Locale } from "./config";
+import { localeHref, type Locale } from "./config";
 import { STRINGS } from "./strings";
 import type { Strings } from "@/lib/strings/de";
 
@@ -37,4 +37,15 @@ export function useLocale(): Locale {
 
 export function useStrings(): Strings {
   return STRINGS[useLocale()];
+}
+
+/**
+ * Interne Links sprachrichtig machen: href("/umgebung") → "/en/umgebung".
+ * Ohne das würde ein Klick in der englischen Fassung auf der deutschen URL
+ * landen — die Sprache steckt jetzt im Pfad, nicht mehr nur im Cookie.
+ * Buchungs- und Konto-Pfade bleiben absichtlich unpräfigiert (siehe config).
+ */
+export function useLocaleHref(): (path: string) => string {
+  const locale = useLocale();
+  return useCallback((path: string) => localeHref(path, locale), [locale]);
 }

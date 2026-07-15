@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useStrings } from "@/lib/i18n/useStrings";
+import { useLocaleHref } from "@/lib/i18n/I18nProvider";
 import { SectionIntro } from "@/components/ui/SectionIntro";
 import { Type } from "@/components/ui/Type";
 import { Reveal } from "@/components/ui/Reveal";
@@ -70,6 +71,8 @@ const SOURCE: Record<CategoryKey, { label: string; href: string }> = {
 
 export function Surroundings() {
   const t = useStrings();
+  // Interne Links tragen die Sprache im Pfad (/en/umgebung statt /umgebung).
+  const href = useLocaleHref();
 
   return (
     <section
@@ -96,7 +99,7 @@ export function Surroundings() {
                 className="relative w-[78vw] shrink-0 snap-start sm:w-auto"
               >
                 <Link
-                  href={`/umgebung/${key}`}
+                  href={href(`/umgebung/${key}`)}
                   aria-label={cat.title}
                   className="group relative block h-[420px] overflow-hidden rounded-[5px]"
                 >
@@ -151,7 +154,7 @@ export function Surroundings() {
 
         <div className="mt-12 text-center">
           <Link
-            href="/umgebung"
+            href={href("/umgebung")}
             className="inline-flex items-center gap-2 font-body text-xs font-semibold uppercase tracking-[0.18em] text-brass-300 transition-colors hover:text-brass-400"
           >
             {t.surroundings.all}

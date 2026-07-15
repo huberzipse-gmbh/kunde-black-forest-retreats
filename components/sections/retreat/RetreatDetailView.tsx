@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { RetreatCard } from "@/data/retreats";
-import { useLocale, useStrings } from "@/lib/i18n/I18nProvider";
+import { useLocale, useLocaleHref, useStrings } from "@/lib/i18n/I18nProvider";
 import { fmtNum } from "@/lib/i18n/format";
 import { Type } from "@/components/ui/Type";
 import { Reveal } from "@/components/ui/Reveal";
@@ -21,6 +21,9 @@ export function RetreatDetailView({ retreat }: { retreat: RetreatCard }) {
   const strings = useStrings();
   const t = strings.apartments;
   const locale = useLocale();
+  // Interne Links tragen die Sprache im Pfad. /buchen bleibt bewusst ohne
+  // Präfix, localeHref gibt diese Pfade unverändert zurück.
+  const href = useLocaleHref();
   const sold = Boolean(retreat.soldOut);
   // Direktbuchung über unser Portal (statischer Fallback: buchbar, wenn nicht ausgebucht).
   const bookable = !sold && (retreat.bookable ?? true);
@@ -65,7 +68,7 @@ export function RetreatDetailView({ retreat }: { retreat: RetreatCard }) {
       <section className="relative flex min-h-[92svh] items-end text-cream-50">
         <div className="mx-auto w-full max-w-7xl px-6 pb-16 md:px-10 md:pb-24">
           <Link
-            href="/#apartments"
+            href={href("/#apartments")}
             className="inline-flex items-center gap-2 font-body text-xs font-semibold uppercase tracking-[0.18em] text-cream-100/80 transition-colors hover:text-cream-50"
           >
             <span aria-hidden className="inline-block rtl:rotate-180">
@@ -123,7 +126,7 @@ export function RetreatDetailView({ retreat }: { retreat: RetreatCard }) {
           {bookable && (
             <div className="mt-9">
               <Link
-                href={`/buchen/${retreat.slug}`}
+                href={href(`/buchen/${retreat.slug}`)}
                 className="inline-flex items-center justify-center rounded-[3px] bg-brass-400 px-8 py-4 font-body text-xs font-semibold uppercase tracking-[0.18em] text-night transition-colors duration-300 hover:bg-brass-300"
               >
                 {t.detail.book}
@@ -196,7 +199,7 @@ export function RetreatDetailView({ retreat }: { retreat: RetreatCard }) {
               </Type>
               <div className="mt-10">
                 <Link
-                  href="/#apartments"
+                  href={href("/#apartments")}
                   className="inline-flex items-center justify-center rounded-[3px] border border-cream-50/40 px-8 py-4 font-body text-xs font-semibold uppercase tracking-[0.18em] text-cream-50 transition-colors duration-300 hover:bg-cream-50 hover:text-night"
                 >
                   {t.soldOut.detailCta}
@@ -219,7 +222,7 @@ export function RetreatDetailView({ retreat }: { retreat: RetreatCard }) {
               </Type>
               <div className="mt-10">
                 <Link
-                  href={`/buchen/${retreat.slug}`}
+                  href={href(`/buchen/${retreat.slug}`)}
                   className="inline-flex items-center justify-center rounded-[3px] bg-brass-400 px-8 py-4 font-body text-xs font-semibold uppercase tracking-[0.18em] text-night transition-colors duration-300 hover:bg-brass-300"
                 >
                   {t.detail.book}

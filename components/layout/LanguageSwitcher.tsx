@@ -7,10 +7,13 @@
  * neu, damit der Server Strings (und dir/lang) in der neuen Sprache rendert.
  */
 import { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import {
   availableLocales,
+  localeHref,
   localeNames,
   localeShort,
+  splitLocale,
   type Locale,
 } from "@/lib/i18n/config";
 import { useLocale, useStrings } from "@/lib/i18n/I18nProvider";
@@ -51,6 +54,8 @@ export function LanguageSwitcher({
   const label = useStrings().langSwitcher.label;
   const activeIndex = Math.max(0, availableLocales.indexOf(current));
   const [open, setOpen] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     if (!open) return;
@@ -69,8 +74,14 @@ export function LanguageSwitcher({
       setOpen(false);
       return;
     }
+    // Cookie bleibt: Buchung, Konto und Admin laufen ohne Sprach-Präfix und
+    // lesen die Sprache weiterhin von dort.
     document.cookie = `NEXT_LOCALE=${l}; path=/; max-age=31536000`;
-    window.location.reload();
+    // Sprache steckt jetzt in der URL → navigieren statt neu laden.
+    const { pathname: bare } = splitLocale(pathname);
+    router.push(localeHref(bare, l));
+    router.refresh();
+    setOpen(false);
   };
 
   const slider = (

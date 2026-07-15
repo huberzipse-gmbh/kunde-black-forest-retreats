@@ -8,6 +8,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { PlaceCard } from "@/components/sections/umgebung/PlaceCard";
 import type { Place, SurroundingCategoryKey } from "@/data/surroundings";
 import { useStrings } from "@/lib/i18n/useStrings";
+import { useLocaleHref } from "@/lib/i18n/I18nProvider";
 
 export interface AccordionCategory {
   key: SurroundingCategoryKey;
@@ -37,6 +38,8 @@ const Chevron = ({ open }: { open: boolean }) => (
 /** Aufklappbare Kategorien: pro Welt eine Reihe, beim Öffnen die Orte + Link in die Kategorie. */
 export function CategoryAccordion({ categories }: { categories: AccordionCategory[] }) {
   const a = useStrings().surroundings.accordion;
+  // Interne Links tragen die Sprache im Pfad (/en/umgebung/... statt /umgebung/...).
+  const href = useLocaleHref();
   // Erste Kategorie standardmäßig offen, damit der Bereich nicht leer wirkt.
   const [open, setOpen] = useState<string | null>(categories[0]?.key ?? null);
 
@@ -98,7 +101,7 @@ export function CategoryAccordion({ categories }: { categories: AccordionCategor
 
                   <div className="mt-8">
                     <Link
-                      href={`/umgebung/${cat.key}`}
+                      href={href(`/umgebung/${cat.key}`)}
                       className="inline-flex items-center gap-2 font-body text-xs font-semibold uppercase tracking-[0.18em] text-brass-300 transition-colors hover:text-brass-400"
                     >
                       {a.viewAll(cat.title)}

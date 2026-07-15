@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Type } from "@/components/ui/Type";
 import { Reveal } from "@/components/ui/Reveal";
 import { useStrings } from "@/lib/i18n/useStrings";
+import { useLocaleHref } from "@/lib/i18n/I18nProvider";
 import { sendContactMessage } from "@/lib/contact/actions";
 
 interface DecorItem {
@@ -30,6 +31,8 @@ const inputBase =
 
 export function ContactForm() {
   const t = useStrings().contact;
+  // Interne Links tragen die Sprache im Pfad (/en/datenschutz statt /datenschutz).
+  const href = useLocaleHref();
   const [isPending, startTransition] = useTransition();
   const [sent, setSent] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -197,7 +200,7 @@ export function ContactForm() {
 
               <Type role="caption" className="text-center text-forest-700/55">
                 {t.privacy}{" "}
-                <Link href="/datenschutz" className="underline underline-offset-2 hover:text-brass-600">
+                <Link href={href("/datenschutz")} className="underline underline-offset-2 hover:text-brass-600">
                   {t.privacyLink}
                 </Link>{" "}
                 {t.privacyAfter}

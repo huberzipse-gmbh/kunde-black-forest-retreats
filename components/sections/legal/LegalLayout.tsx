@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
+import { getLocale } from "@/lib/i18n/server";
+import { localeHref } from "@/lib/i18n/config";
 import { Type } from "@/components/ui/Type";
 
 /**
@@ -29,19 +31,23 @@ interface LegalLayoutProps {
   children: ReactNode;
 }
 
-export function LegalLayout({
+export async function LegalLayout({
   title,
   updated,
   backLabel = "Zur Startseite",
   children,
 }: LegalLayoutProps) {
+  // Server-Komponente: Sprache kommt aus der URL (Middleware-Header), damit der
+  // Zurück-Link in der englischen Fassung auf /en zeigt und nicht auf /.
+  const locale = await getLocale();
+
   return (
     <article className="bg-cream-50">
       {/* Dunkles Titelband (unter dem fixierten Header) */}
       <header className="bg-night px-6 pt-32 pb-14 text-cream-50 md:pt-40 md:pb-16">
         <div className="mx-auto max-w-3xl">
           <Link
-            href="/"
+            href={localeHref("/", locale)}
             className="inline-flex items-center gap-2 font-body text-xs font-semibold uppercase tracking-[0.18em] text-cream-100/75 transition-colors hover:text-cream-50"
           >
             <span aria-hidden className="inline-block rtl:rotate-180">

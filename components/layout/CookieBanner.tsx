@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useStrings } from "@/lib/i18n/useStrings";
+import { useLocaleHref } from "@/lib/i18n/I18nProvider";
 import { getConsent, setConsent } from "@/lib/consent";
 
 /**
@@ -14,6 +15,8 @@ import { getConsent, setConsent } from "@/lib/consent";
  */
 export function CookieBanner() {
   const t = useStrings().cookie;
+  // Interne Links tragen die Sprache im Pfad (/en/datenschutz statt /datenschutz).
+  const href = useLocaleHref();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -57,7 +60,7 @@ export function CookieBanner() {
             {t.reject}
           </button>
           <Link
-            href="/datenschutz"
+            href={href("/datenschutz")}
             className="font-body text-xs text-cream-100/60 underline-offset-2 transition-colors hover:text-brass-300 hover:underline"
           >
             {t.link}

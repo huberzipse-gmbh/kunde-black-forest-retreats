@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import type { RetreatCard } from "@/data/retreats";
+import { useLocaleHref } from "@/lib/i18n/I18nProvider";
 import { Type } from "@/components/ui/Type";
 import { GradientPanel } from "@/components/ui/GradientPanel";
 import { ApartmentMeta } from "./ApartmentMeta";
@@ -79,10 +82,12 @@ export function ApartmentCard({
 }: ApartmentCardProps) {
   const sold = Boolean(retreat.soldOut);
   const accent = ACCENTS[retreat.accent ?? "brass"];
+  // Interne Links tragen die Sprache im Pfad (/en/wohnungen/... statt /wohnungen/...).
+  const href = useLocaleHref();
 
   return (
     <Link
-      href={`/wohnungen/${retreat.slug}`}
+      href={href(`/wohnungen/${retreat.slug}`)}
       className={`${CARD_CLASS} ${accent.ring}`}
       aria-label={retreat.name}
     >

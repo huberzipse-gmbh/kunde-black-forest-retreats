@@ -28,6 +28,15 @@ const supabaseImageHosts = Array.from(
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: supabaseImageHosts,
+    // Next 16 liefert per Default nur WebP. AVIF zuerst (20-30 % kleiner),
+    // WebP als Fallback. Reihenfolge = Priorität beim Accept-Header.
+    formats: ["image/avif", "image/webp"],
+    // In Next 16 Pflichtfeld; ohne erlaubte Liste wären beliebig viele
+    // Optimierungs-Varianten erzwingbar (Angriffsfläche).
+    qualities: [75],
+    // On-Demand-Optimierung ist teuer auf dem kleinen Server; optimierte
+    // Bilder länger cachen statt bei jedem Aufruf neu zu rechnen.
+    minimumCacheTTL: 2678400, // 31 Tage
   },
   async rewrites() {
     if (!kong) return [];

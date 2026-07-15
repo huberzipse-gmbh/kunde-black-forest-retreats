@@ -6,7 +6,7 @@
  */
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useLocale, useStrings } from "@/lib/i18n/I18nProvider";
+import { useLocale, useLocaleHref, useStrings } from "@/lib/i18n/I18nProvider";
 import { fmtNum } from "@/lib/i18n/format";
 import { CONSENT_EVENT, getConsent } from "@/lib/consent";
 
@@ -18,6 +18,8 @@ interface Props {
 export function PromoBanner({ code, percent }: Props) {
   const t = useStrings().bookingFlow.promo;
   const locale = useLocale();
+  // Interne Links tragen die Sprache im Pfad (/en/wohnungen statt /wohnungen).
+  const href = useLocaleHref();
   const [hidden, setHidden] = useState(false);
   // Erst zeigen, wenn der Cookie-Hinweis beantwortet ist (beide liegen unten).
   const [consentDone, setConsentDone] = useState(false);
@@ -44,7 +46,7 @@ export function PromoBanner({ code, percent }: Props) {
             {fmtNum(t.banner(pct), locale)}
           </p>
           <Link
-            href="/wohnungen"
+            href={href("/wohnungen")}
             className="mt-1 inline-block font-body text-xs font-semibold uppercase tracking-[0.14em] text-brass-300 underline-offset-4 transition-colors hover:text-brass-100 hover:underline"
           >
             {t.bannerCta}

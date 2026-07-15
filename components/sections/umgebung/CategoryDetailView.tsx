@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { placesByCategory, type SurroundingCategoryKey } from "@/data/surroundings";
 import { useStrings } from "@/lib/i18n/useStrings";
+import { useLocaleHref } from "@/lib/i18n/I18nProvider";
 import { Type } from "@/components/ui/Type";
 import { CategoryGrid } from "@/components/sections/umgebung/CategoryGrid";
 
@@ -11,6 +12,8 @@ export function CategoryDetailView({ slug }: { slug: SurroundingCategoryKey }) {
   const cat = strings.surroundings.categories[slug];
   const detail = strings.surroundings.detail;
   const places = placesByCategory(slug, strings);
+  // Interne Links tragen die Sprache im Pfad (/en/umgebung statt /umgebung).
+  const href = useLocaleHref();
 
   return (
     <article className="bg-night text-cream-50">
@@ -18,7 +21,7 @@ export function CategoryDetailView({ slug }: { slug: SurroundingCategoryKey }) {
       <section className="px-6 pt-32 pb-14 md:px-10 md:pt-40 md:pb-18">
         <div className="mx-auto max-w-7xl">
           <Link
-            href="/umgebung"
+            href={href("/umgebung")}
             className="inline-flex items-center gap-2 font-body text-xs font-semibold uppercase tracking-[0.18em] text-cream-100/70 transition-colors hover:text-cream-50"
           >
             <span aria-hidden className="inline-block rtl:rotate-180">
