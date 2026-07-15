@@ -865,6 +865,12 @@ export const de = {
       statusPending: 'Offen',
       statusCancelled: 'Storniert',
       checkEmail: 'Fast geschafft: Bitte bestätige deine E-Mail-Adresse über den Link in deinem Postfach.',
+      working: 'Einen Moment …',
+      passwordHint: 'Mindestens 6 Zeichen.',
+      errInvalid: 'E-Mail oder Passwort stimmt nicht. Falls du noch kein Konto hast, lege oben eines an.',
+      errNotConfirmed: 'Bitte bestätige zuerst deine E-Mail-Adresse über den Link in deinem Postfach.',
+      errExists: 'Für diese E-Mail gibt es schon ein Konto. Wechsle bitte auf „Anmelden“.',
+      errPassword: 'Das Passwort muss mindestens 6 Zeichen haben.',
     },
     errors: {
       unavailable: 'Dieser Zeitraum ist leider schon belegt. Wähle bitte andere Daten.',

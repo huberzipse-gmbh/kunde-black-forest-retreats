@@ -1,7 +1,6 @@
 import { getLocale, getStrings } from "@/lib/i18n/server";
 import { supabaseConfigured } from "@/lib/supabase/env";
 import { createClient } from "@/lib/supabase/server";
-import { createAdminClient } from "@/lib/supabase/admin";
 import { mapBooking } from "@/lib/booking/db";
 import { NotConfiguredNotice } from "@/components/booking/NotConfiguredNotice";
 import { AccountView, type AccountBooking } from "@/components/booking/AccountView";
@@ -16,28 +15,34 @@ export default async function AccountPage() {
   const { data: userData } = await sb.auth.getUser();
   const user = userData?.user ?? null;
 
+  // Eigene Buchungen über den eingeloggten Client (RLS „own bookings"), NICHT
+  // über den Service-Role-Admin. So hängt die Kontoseite nicht am Service-Key,
+  // und ein Ladefehler darf hier nie die ganze Seite crashen — im Zweifel
+  // bleibt die Buchungsliste leer und der Login-Zustand wird trotzdem gezeigt.
   let bookings: AccountBooking[] = [];
   if (user) {
-    // Eigene Buchungen inkl. Wohnungsname (Service-Role, gefiltert auf user_id).
-    const admin = createAdminClient();
-    const { data } = await admin
-      .from("bookings")
-      .select("*, retreats(name_de)")
-      .eq("user_id", user.id)
-      .order("check_in", { ascending: false });
-    bookings = (data ?? []).map((row) => {
-      const b = mapBooking(row);
-      return {
-        bookingNumber: b.bookingNumber,
-        retreatName:
-          (row as { retreats?: { name_de?: string } }).retreats?.name_de ?? b.retreatId,
-        checkIn: b.checkIn,
-        checkOut: b.checkOut,
-        guests: b.adults + b.children,
-        totalCents: b.totalCents,
-        status: b.status,
-      };
-    });
+    try {
+      const { data } = await sb
+        .from("bookings")
+        .select("*, retreats(name_de)")
+        .eq("user_id", user.id)
+        .order("check_in", { ascending: false });
+      bookings = (data ?? []).map((row) => {
+        const b = mapBooking(row);
+        return {
+          bookingNumber: b.bookingNumber,
+          retreatName:
+            (row as { retreats?: { name_de?: string } }).retreats?.name_de ?? b.retreatId,
+          checkIn: b.checkIn,
+          checkOut: b.checkOut,
+          guests: b.adults + b.children,
+          totalCents: b.totalCents,
+          status: b.status,
+        };
+      });
+    } catch {
+      bookings = [];
+    }
   }
 
   void strings;

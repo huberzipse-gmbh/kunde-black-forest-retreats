@@ -851,6 +851,12 @@ export const zh: Strings = {
       statusPending: '待处理',
       statusCancelled: '已取消',
       checkEmail: '还差一步：请通过邮箱中的链接确认您的电子邮箱。',
+      working: '请稍候……',
+      passwordHint: '至少 6 个字符。',
+      errInvalid: '邮箱或密码不正确。如果您还没有账户，请在上方注册。',
+      errNotConfirmed: '请先通过邮箱中的链接确认您的电子邮箱。',
+      errExists: '该邮箱已注册账户。请切换到“登录”。',
+      errPassword: '密码至少需要 6 个字符。',
     },
     errors: {
       unavailable: '该日期已被预订，请选择其他日期。',

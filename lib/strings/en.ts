@@ -861,6 +861,12 @@ export const en: Strings = {
       statusPending: 'Pending',
       statusCancelled: 'Cancelled',
       checkEmail: 'Almost there: please confirm your email address via the link in your inbox.',
+      working: 'One moment …',
+      passwordHint: 'At least 6 characters.',
+      errInvalid: 'Email or password is incorrect. If you do not have an account yet, create one above.',
+      errNotConfirmed: 'Please confirm your email address first via the link in your inbox.',
+      errExists: 'An account with this email already exists. Please switch to “Sign in”.',
+      errPassword: 'The password must be at least 6 characters.',
     },
     errors: {
       unavailable: 'These dates are already booked. Please pick different ones.',

@@ -46,6 +46,7 @@ export function AccountView({ userEmail, bookings, registeredDiscountPercent, lo
   );
 
   const doAuth = async () => {
+    if (busy || !email || password.length < 6) return;
     setBusy(true);
     setError(null);
     setNotice(null);
@@ -58,16 +59,30 @@ export function AccountView({ userEmail, bookings, registeredDiscountPercent, lo
         const { data, error: e } = await sb.auth.signUp({ email, password });
         if (e) throw e;
         if (data.user && !data.session) {
+          // Selbst-Hosting bestätigt Mails automatisch — dieser Zweig greift nur,
+          // falls die Bestätigung doch aktiviert ist.
           setNotice(t.account.checkEmail);
           setBusy(false);
           return;
         }
       }
+      // Erfolg: Seite serverseitig neu laden. busy bleibt an, damit der Button
+      // nicht kurz wieder klickbar wirkt, während der Login-Zustand rendert.
       router.refresh();
-    } catch {
-      setError(t.errors.authFailed);
-    } finally {
+    } catch (e) {
       setBusy(false);
+      const msg = e instanceof Error ? e.message.toLowerCase() : "";
+      if (msg.includes("invalid login") || msg.includes("invalid_credentials")) {
+        setError(t.account.errInvalid);
+      } else if (msg.includes("not confirmed") || msg.includes("email_not_confirmed")) {
+        setError(t.account.errNotConfirmed);
+      } else if (msg.includes("already registered") || msg.includes("user_already_exists")) {
+        setError(t.account.errExists);
+      } else if (msg.includes("password")) {
+        setError(t.account.errPassword);
+      } else {
+        setError(t.errors.authFailed);
+      }
     }
   };
 
@@ -117,12 +132,18 @@ export function AccountView({ userEmail, bookings, registeredDiscountPercent, lo
               </button>
             ))}
           </div>
-          <div className="mt-5 space-y-4">
+          <form
+            className="mt-5 space-y-4"
+            onSubmit={(e) => {
+              e.preventDefault();
+              doAuth();
+            }}
+          >
             <div>
               <label className="mb-1.5 block font-body text-xs font-semibold text-forest-900">
                 {t.account.emailLabel}
               </label>
-              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className={input} autoComplete="email" />
+              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className={input} autoComplete="email" required />
             </div>
             <div>
               <label className="mb-1.5 block font-body text-xs font-semibold text-forest-900">
@@ -134,19 +155,25 @@ export function AccountView({ userEmail, bookings, registeredDiscountPercent, lo
                 onChange={(e) => setPassword(e.target.value)}
                 className={input}
                 autoComplete={mode === "login" ? "current-password" : "new-password"}
+                minLength={6}
+                required
               />
+              <p className="mt-1.5 font-body text-xs text-forest-700/55">{t.account.passwordHint}</p>
             </div>
             {error && <p className="font-body text-sm text-red-800">{error}</p>}
             {notice && <p className="font-body text-sm text-forest-700/80">{notice}</p>}
             <button
-              type="button"
-              onClick={doAuth}
+              type="submit"
               disabled={busy || !email || password.length < 6}
-              className="rounded-[3px] bg-brass-400 px-8 py-4 font-body text-xs font-semibold uppercase tracking-[0.18em] text-night transition-colors hover:bg-brass-300 disabled:opacity-40"
+              className="rounded-[3px] bg-brass-400 px-8 py-4 font-body text-xs font-semibold uppercase tracking-[0.18em] text-night transition-colors hover:bg-brass-300 disabled:cursor-not-allowed disabled:opacity-40"
             >
-              {mode === "login" ? t.account.login : t.account.register}
+              {busy
+                ? t.account.working
+                : mode === "login"
+                  ? t.account.login
+                  : t.account.register}
             </button>
-          </div>
+          </form>
         </div>
       ) : (
         <>

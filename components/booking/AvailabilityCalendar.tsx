@@ -148,13 +148,11 @@ export function AvailabilityCalendar({ blockedNights, minNights, selection, onCh
                   </div>
                 ))}
                 {Array.from({ length: lead }).map((_, i) => (
-                  <div key={`lead-${i}`} />
+                  <div key={`lead-${i}`} className="aspect-square" />
                 ))}
                 {days.map((day) => {
                   const state = dayState(day);
                   const disabled = state === "past" || state === "blocked";
-                  const base =
-                    "relative mx-auto flex h-10 w-10 items-center justify-center rounded-full font-body text-sm transition-colors";
                   const cls =
                     state === "selected"
                       ? "bg-forest-900 text-cream-50"
@@ -168,16 +166,21 @@ export function AvailabilityCalendar({ blockedNights, minNights, selection, onCh
                               ? "text-forest-900 hover:bg-brass-400/20"
                               : "text-forest-900 hover:bg-forest-900/10";
                   return (
-                    <button
-                      key={iso(day)}
-                      type="button"
-                      disabled={disabled}
-                      onClick={() => selectDay(day)}
-                      className={`${base} ${cls}`}
-                      aria-pressed={state === "selected"}
-                    >
-                      {fmtNum(format(day, "d"), locale)}
-                    </button>
+                    // Zelle: quadratisch, füllt die Spalte, mit etwas Innenabstand.
+                    // Der Kreis (der Button) passt sich so der Spaltenbreite an und
+                    // hält immer Abstand zum Nachbarn — auch in der schmalen
+                    // Zwei-Monats-Ansicht, wo feste Größen sonst überlappten.
+                    <div key={iso(day)} className="flex aspect-square items-center justify-center p-[3px]">
+                      <button
+                        type="button"
+                        disabled={disabled}
+                        onClick={() => selectDay(day)}
+                        className={`relative flex aspect-square w-full max-w-10 items-center justify-center rounded-full font-body text-sm transition-colors ${cls}`}
+                        aria-pressed={state === "selected"}
+                      >
+                        {fmtNum(format(day, "d"), locale)}
+                      </button>
+                    </div>
                   );
                 })}
               </div>
