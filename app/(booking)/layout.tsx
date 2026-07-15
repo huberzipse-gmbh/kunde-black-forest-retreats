@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getStrings } from "@/lib/i18n/server";
+import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 
 /**
  * Schlankes Layout für den Buchungsflow: ruhiger Kopf mit Wortmarke,
@@ -24,12 +25,15 @@ export default async function BookingLayout({
               {t.brand.location}
             </span>
           </Link>
-          <Link
-            href="/#apartments"
-            className="font-body text-xs font-semibold uppercase tracking-[0.16em] text-forest-700/70 transition-colors hover:text-forest-900"
-          >
-            {t.apartments.detail.back}
-          </Link>
+          <div className="flex items-center gap-4">
+            <LanguageSwitcher compact showLabel={false} />
+            <Link
+              href="/#apartments"
+              className="font-body text-xs font-semibold uppercase tracking-[0.16em] text-forest-700/70 transition-colors hover:text-forest-900"
+            >
+              {t.apartments.detail.back}
+            </Link>
+          </div>
         </div>
       </header>
       <main className="mx-auto max-w-5xl px-6 py-10 md:px-10 md:py-14">{children}</main>
