@@ -100,6 +100,20 @@ export function findConflicts(occupancies: Occupancy[]): Conflict[] {
   return conflicts;
 }
 
+/**
+ * Stabile Identität eines Konflikts — damit derselbe Konflikt nicht bei jedem
+ * Sync (alle 30 min) erneut gemeldet wird.
+ *
+ * Bewusst über Quelle + Zeitraum statt über IDs: der iCal-Sync löscht die
+ * Airbnb-Blöcke bei jedem Lauf und legt sie neu an, ihre UUIDs wechseln also
+ * ständig. Verschieben sich die Daten, ist es ohnehin ein anderer Konflikt und
+ * darf neu gemeldet werden.
+ */
+export function conflictKey(c: Conflict): string {
+  const side = (o: Occupancy) => `${o.kind}:${o.start}:${o.end}`;
+  return `${c.retreatId}|${[side(c.a), side(c.b)].sort().join('|')}`;
+}
+
 /** Doppelt vergebene Nächte als ISO-Set — für die Kalender-Markierung. */
 export function conflictNights(conflicts: Conflict[]): Set<string> {
   const nights = new Set<string>();

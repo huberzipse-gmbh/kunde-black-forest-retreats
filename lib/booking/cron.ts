@@ -11,6 +11,7 @@ import { createAdminClient } from '@/lib/supabase/admin';
 import { parseIcs } from '@/lib/ical/parse';
 import { getPaymentProvider } from '@/lib/payments';
 import { mapBooking } from './db';
+import { syncConflictAlerts } from './conflictAlerts';
 import { markBookingPaid, markPaymentFailed } from './confirm';
 
 const iso = (d: Date) => format(d, 'yyyy-MM-dd');
@@ -80,6 +81,16 @@ export async function runIcalSync(): Promise<CronResult> {
       const msg = err instanceof Error ? err.message : 'Fehler';
       details.push(`${retreat.name_de}: FEHLER ${msg}`);
     }
+  }
+
+  // Frisch importiert → jetzt zeigt sich, ob eine Airbnb-Buchung auf eine
+  // eigene Buchung trifft. Neue Kollisionen gehen sofort per Mail raus.
+  const alerts = await syncConflictAlerts();
+  if (alerts.open > 0) {
+    details.push(
+      `${alerts.open} Doppelbelegung${alerts.open > 1 ? 'en' : ''}` +
+        (alerts.notified > 0 ? ` (${alerts.notified} gemeldet)` : ''),
+    );
   }
 
   const result: CronResult = { job: 'sync-ical', processed, failed, details };
