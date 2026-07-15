@@ -6,7 +6,7 @@ import { getRetreatCardBySlug } from "@/lib/retreats/db";
 import { supabaseConfigured } from "@/lib/supabase/env";
 import { createClient } from "@/lib/supabase/server";
 import { fetchBlocks, fetchPriceRules, fetchSettings } from "@/lib/booking/db";
-import { blockedNights } from "@/lib/booking/availability";
+import { blockedNights, fillUnsellableGaps } from "@/lib/booking/availability";
 import { PROMO_COOKIE } from "@/lib/booking/pricing";
 import { GIFT_COOKIE } from "@/lib/giftcards/types";
 import { resolveGiftCard } from "@/lib/giftcards/redeem";
@@ -65,7 +65,13 @@ export default async function BookingDatesPage({
       }}
       rules={rules}
       settings={settings}
-      blockedNights={[...blockedNights(blocks)]}
+      blockedNights={[
+        ...fillUnsellableGaps(
+          blockedNights(blocks),
+          retreat.minNights ?? 2,
+          new Date().toISOString().slice(0, 10),
+        ),
+      ]}
       isRegistered={Boolean(userRes.data?.user)}
       promoCode={promoCode}
       giftCard={giftCard ? { code: giftCard.code, balanceCents: giftCard.balanceCents } : null}

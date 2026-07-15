@@ -43,6 +43,39 @@ export function blockedNights(
 }
 
 /**
+ * Unverkäufliche Lücken schließen (Airbnb-Parität): eine freie Lücke zwischen
+ * Belegungen, die kürzer als der Mindestaufenthalt ist, kann nie gebucht
+ * werden. Airbnb zeigt solche Tage als belegt an, exportiert sie aber NICHT
+ * im iCal-Feed — deshalb spiegeln wir die Regel hier selbst, damit beide
+ * Kalender exakt dieselben Tage sperren.
+ */
+export function fillUnsellableGaps(
+  blockedSet: Set<string>,
+  minNights: number,
+  from: string,
+  horizonDays = 365,
+): Set<string> {
+  const result = new Set(blockedSet);
+  let run: string[] = [];
+  let d = new Date(from);
+  for (let i = 0; i <= horizonDays; i++) {
+    const day = iso(d);
+    if (result.has(day)) {
+      // Lücke endet an einer Belegung: zu kurz für minNights → mitsperren.
+      if (run.length > 0 && run.length < minNights) {
+        for (const night of run) result.add(night);
+      }
+      run = [];
+    } else {
+      run.push(day);
+    }
+    d = addDays(d, 1);
+  }
+  // Offene Lücke am Horizont-Ende bleibt frei — dort begrenzt nichts den Aufenthalt.
+  return result;
+}
+
+/**
  * Frühestes Checkout-Datum ab einem gewählten Check-in: bis zur nächsten
  * belegten Nacht (der Gast kann nicht „über" eine Belegung hinweg buchen).
  * Gibt null zurück, wenn direkt die erste Nacht belegt ist.
