@@ -13,12 +13,22 @@ und sind für eine kleine Direktanbieter-Seite nicht gewinnbar. Gewonnen wird
 
 Eigene, indexierbare Seiten mit echtem Inhalt (nicht nur Weiterleitung):
 
+**Bereits gebaut (deutsch, im Marken-Design, mit FAQ + JSON-LD):**
+- `/ferienwohnung-neuenbuerg` (ferienwohnung/unterkunft/übernachtung neuenbürg)
+- `/urlaub-enztal` (urlaub enztal, nachbarorte Birkenfeld/Straubenhardt/Höfen)
+- `/ferienwohnung-bad-wildbad` (nähe bad wildbad, baumwipfelpfad, palais thermal)
+- `/anreise` (anreise neuenbürg, ohne auto, enztalbahn, entfernungen)
+
+**Noch offen / sinnvoll ergänzbar:**
+
 | Seite | Ziel-Suchbegriffe |
 |---|---|
-| Ferienwohnung Neuenbürg | ferienwohnung neuenbürg, unterkunft neuenbürg, apartment neuenbürg, übernachtung neuenbürg |
-| Unterkunft Enztal / Eyachtal | ferienwohnung enztal, ferienwohnung eyachtal, unterkunft enztal |
-| Nähe Bad Wildbad | ferienwohnung bad wildbad, unterkunft nähe bad wildbad, ferienwohnung nähe palais thermal |
 | Raum Pforzheim | ferienwohnung pforzheim umgebung, unterkunft nordschwarzwald pforzheim |
+| Eyachtal (eigene Seite, falls Nachfrage) | ferienwohnung eyachtal, wandern eyachtal |
+
+Wichtig für die neuen Seiten: sie sind rein deutsch (canonical + hreflang nur `de` +
+`x-default`), weil lokale Ortssuchen deutschsprachig sind. Interne Verlinkung von der
+Startseite/Umgebung auf diese Seiten erhöht ihre Relevanz und hilft den Sitelinks.
 
 ## Priorität 2: Anlass-Landingpages (konvertieren stark)
 
