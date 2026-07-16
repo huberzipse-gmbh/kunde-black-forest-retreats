@@ -20,6 +20,7 @@ import {
 } from "date-fns";
 import { useLocale, useStrings } from "@/lib/i18n/I18nProvider";
 import { fmtNum } from "@/lib/i18n/format";
+import { MIN_BOOKING_LEAD_DAYS } from "@/lib/booking/availability";
 
 const iso = (d: Date) => format(d, "yyyy-MM-dd");
 
@@ -41,6 +42,8 @@ export function AvailabilityCalendar({ blockedNights, minNights, selection, onCh
   const t = useStrings().bookingFlow.calendar;
   const locale = useLocale();
   const today = startOfToday();
+  // Buchungsvorlauf: Tage innerhalb der nächsten 48 h sind nicht anwählbar.
+  const minSelectable = addDays(today, MIN_BOOKING_LEAD_DAYS);
   const [viewMonth, setViewMonth] = useState(startOfMonth(today));
   const blocked = useMemo(() => new Set(blockedNights), [blockedNights]);
 
@@ -86,7 +89,7 @@ export function AvailabilityCalendar({ blockedNights, minNights, selection, onCh
 
   const dayState = (day: Date): "past" | "blocked" | "selected" | "range" | "free" | "checkout-only" => {
     const dayIso = iso(day);
-    if (isBefore(day, today)) return "past";
+    if (isBefore(day, minSelectable)) return "past";
     if (dayIso === checkIn || dayIso === checkOut) return "selected";
     if (checkIn && checkOut && dayIso > checkIn && dayIso < checkOut) return "range";
     if (blocked.has(dayIso)) {

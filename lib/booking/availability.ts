@@ -7,6 +7,12 @@ import type { AvailabilityBlock } from './types';
 
 const iso = (d: Date) => format(d, 'yyyy-MM-dd');
 
+/**
+ * Buchungsvorlauf: Anreise frühestens 2 Tage (48 h) nach heute — gilt für
+ * Kalender-UI und Server-Validierung gleichermaßen.
+ */
+export const MIN_BOOKING_LEAD_DAYS = 2;
+
 /** Standard-Overlap-Check zweier halboffener Intervalle [start, end). */
 export function rangesOverlap(
   aStart: string, aEnd: string,
