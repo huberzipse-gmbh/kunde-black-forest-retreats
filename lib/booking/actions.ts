@@ -15,7 +15,7 @@ import { getLocale } from '@/lib/i18n/server';
 import { computeQuote, PROMO_COOKIE } from './pricing';
 import { GIFT_COOKIE } from '@/lib/giftcards/types';
 import { resolveGiftCard } from '@/lib/giftcards/redeem';
-import { isRangeFree } from './availability';
+import { isRangeFree, MIN_BOOKING_LEAD_DAYS } from './availability';
 import { fetchBlocks, fetchPriceRules, fetchSettings, mapBooking } from './db';
 import { generateBookingNumber } from './bookingNumber';
 import { assertTransition } from './stateMachine';
@@ -75,7 +75,10 @@ export async function createBooking(raw: CreateBookingInput): Promise<CreateBook
 
     const nights = differenceInCalendarDays(new Date(input.checkOut), new Date(input.checkIn));
     if (nights < retreatRow.min_nights) return { ok: false, error: 'min-nights' };
-    if (input.checkIn < iso(new Date())) return { ok: false, error: 'invalid' };
+    // Buchungsvorlauf: Anreise frühestens MIN_BOOKING_LEAD_DAYS Tage nach heute.
+    if (input.checkIn < iso(addDays(new Date(), MIN_BOOKING_LEAD_DAYS))) {
+      return { ok: false, error: 'invalid' };
+    }
     if (input.adults + input.children > retreatRow.max_guests) {
       return { ok: false, error: 'max-guests' };
     }

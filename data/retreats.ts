@@ -196,7 +196,7 @@ export const retreats: RetreatStruct[] = [
     id: 'grey-fox',
     slug: 'grey-fox',
     year: '1540',
-    image: '',
+    image: '/images/wohnungen/grey-fox/01.webp',
     gallery: [],
     variant: 'moss',
     soldOut: true,

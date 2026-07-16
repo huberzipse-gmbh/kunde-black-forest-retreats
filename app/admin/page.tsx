@@ -15,6 +15,10 @@ const iso = (d: Date) => format(d, "yyyy-MM-dd");
 export default async function AdminDashboardPage() {
   if (!supabaseAdminConfigured()) return <AdminNotConfigured />;
 
+  // Nur bei echten Requests laufen (nie beim Prerender — der no-store-Fetch
+  // des iCal-Syncs bricht sonst mit „Dynamic server usage" ab).
+  await connection();
+
   // Opportunistischer Cron-Trigger: Sync/Abbuchung, wenn > 30 min her.
   // connection() stoppt das Prerendering — ohne sie wirft der no-store-Fetch
   // des iCal-Syncs beim statischen Rendern (DynamicServerError), der Sync
