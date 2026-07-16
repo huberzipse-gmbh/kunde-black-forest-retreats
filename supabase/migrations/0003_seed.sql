@@ -27,7 +27,7 @@ insert into retreats (
   true, true, true, 'brass',
   '/images/wohnungen/penthouse/01.jpg',
   array['/images/wohnungen/penthouse/01.jpg','/images/wohnungen/penthouse/02.jpg','/images/wohnungen/penthouse/03.jpg','/images/wohnungen/penthouse/04.jpg','/images/wohnungen/penthouse/05.jpg','/images/wohnungen/penthouse/06.jpg','/images/wohnungen/penthouse/07.jpg','/images/wohnungen/penthouse/08.jpg','/images/wohnungen/penthouse/09.jpg'],
-  20000, 2, 'https://www.airbnb.de/rooms/1109938710053146548', true, true, 10
+  15000, 2, 'https://www.airbnb.de/rooms/1109938710053146548', true, true, 10
 ) on conflict (id) do nothing;
 
 -- ── Fachwerk-Apartment (live, buchbar) ──────────────────────────────────────
@@ -50,7 +50,7 @@ insert into retreats (
   true, true, 'bark',
   '/images/wohnungen/fachwerk/01.jpg',
   array['/images/wohnungen/fachwerk/01.jpg','/images/wohnungen/fachwerk/02.jpg','/images/wohnungen/fachwerk/03.jpg','/images/wohnungen/fachwerk/04.jpg','/images/wohnungen/fachwerk/05.jpg','/images/wohnungen/fachwerk/06.jpg','/images/wohnungen/fachwerk/07.jpg','/images/wohnungen/fachwerk/08.jpg','/images/wohnungen/fachwerk/09.jpg'],
-  20000, 2, 'https://www.airbnb.de/rooms/1694207599638836907', true, true, 20
+  15000, 2, 'https://www.airbnb.de/rooms/1694207599638836907', true, true, 20
 ) on conflict (id) do nothing;
 
 -- ── Ausgebuchte Schein-Häuser (nicht buchbar) ───────────────────────────────

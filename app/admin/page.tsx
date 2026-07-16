@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { connection } from "next/server";
 import { addDays, format } from "date-fns";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { supabaseAdminConfigured } from "@/lib/supabase/env";
@@ -15,6 +16,10 @@ export default async function AdminDashboardPage() {
   if (!supabaseAdminConfigured()) return <AdminNotConfigured />;
 
   // Opportunistischer Cron-Trigger: Sync/Abbuchung, wenn > 30 min her.
+  // connection() stoppt das Prerendering — ohne sie wirft der no-store-Fetch
+  // des iCal-Syncs beim statischen Rendern (DynamicServerError), der Sync
+  // schlägt dann bei jedem Lauf fehl und Airbnb-Änderungen kommen nie an.
+  await connection();
   await runIfStale();
 
   const sb = createAdminClient();
