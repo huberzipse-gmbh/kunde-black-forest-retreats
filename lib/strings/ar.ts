@@ -275,7 +275,7 @@ export const ar: Strings = {
     contact: {
       title: 'تواصل معنا',
       location: 'نوينبورغ · الحديقة الوطنية للغابة السوداء الشمالية',
-      email: 'blackforestretreats@axiecentro.de',
+      email: 'rentals@axiecentro.de',
       phone: '+49 7082 944 39 73',
       newsletterTitle: 'النشرة البريدية',
       newsletterText: 'بين الحين والآخر رسالة من الغابة السوداء: مساكن جديدة وعروض هادئة. لا أكثر.',

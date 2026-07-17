@@ -33,7 +33,7 @@ export function ownerRecipients(): string[] {
     .filter(Boolean);
   return fromEnv.length > 0
     ? fromEnv
-    : ['blackforestretreats@axiecentro.de', 'jasin@huber-zipse.de'];
+    : ['rentals@axiecentro.de', 'jasin@huber-zipse.de'];
 }
 
 export async function sendEmail(input: SendEmailInput): Promise<{ ok: boolean; error?: string }> {

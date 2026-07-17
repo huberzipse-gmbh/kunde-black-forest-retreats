@@ -65,7 +65,7 @@ const AddressBlock = () => (
     Telefon: <a href="tel:+491603756052">+49 7082 944 39 73</a>
     <br />
     E-Mail:{" "}
-    <a href="mailto:blackforestretreats@axiecentro.de">blackforestretreats@axiecentro.de</a>
+    <a href="mailto:rentals@axiecentro.de">rentals@axiecentro.de</a>
   </p>
 );
 
@@ -155,7 +155,7 @@ const CONTENT: Record<Locale, WiderrufContent> = {
         <ul>
           <li>
             An: Axiecentro Germany GmbH, Hockenheimer Straße 6, 68723 Oftersheim,
-            Deutschland, E-Mail: blackforestretreats@axiecentro.de
+            Deutschland, E-Mail: rentals@axiecentro.de
           </li>
           <li>
             Hiermit widerrufe(n) ich/wir den von mir/uns abgeschlossenen Vertrag über den
@@ -242,7 +242,7 @@ const CONTENT: Record<Locale, WiderrufContent> = {
         <ul>
           <li>
             To: Axiecentro Germany GmbH, Hockenheimer Straße 6, 68723 Oftersheim, Germany,
-            email: blackforestretreats@axiecentro.de
+            email: rentals@axiecentro.de
           </li>
           <li>
             I/we hereby withdraw from the contract concluded by me/us for the purchase of
@@ -301,7 +301,7 @@ const CONTENT: Record<Locale, WiderrufContent> = {
         <p>如果您希望撤回合同，请填写此表格并寄回。</p>
         <ul>
           <li>
-            致：Axiecentro Germany GmbH，Hockenheimer Straße 6, 68723 Oftersheim, 德国，电子邮件：blackforestretreats@axiecentro.de
+            致：Axiecentro Germany GmbH，Hockenheimer Straße 6, 68723 Oftersheim, 德国，电子邮件：rentals@axiecentro.de
           </li>
           <li>本人/我们特此撤回本人/我们就购买以下礼券所订立的合同：</li>
           <li>订购日期 / 收到日期：</li>
@@ -359,7 +359,7 @@ const CONTENT: Record<Locale, WiderrufContent> = {
         <p>إذا رغبت في الانسحاب من العقد، يُرجى تعبئة هذا النموذج وإعادته إلينا.</p>
         <ul>
           <li>
-            إلى: Axiecentro Germany GmbH، Hockenheimer Straße 6, 68723 Oftersheim، ألمانيا، البريد الإلكتروني: blackforestretreats@axiecentro.de
+            إلى: Axiecentro Germany GmbH، Hockenheimer Straße 6, 68723 Oftersheim، ألمانيا، البريد الإلكتروني: rentals@axiecentro.de
           </li>
           <li>
             أُلغي/نُلغي بموجب هذا العقد الذي أبرمته/أبرمناه بشأن شراء بطاقة الهدية التالية:

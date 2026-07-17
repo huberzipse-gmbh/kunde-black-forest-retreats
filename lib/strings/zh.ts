@@ -272,7 +272,7 @@ export const zh: Strings = {
     contact: {
       title: '联系我们',
       location: '诺因比格 · 北黑森林国家公园',
-      email: 'blackforestretreats@axiecentro.de',
+      email: 'rentals@axiecentro.de',
       phone: '+49 7082 944 39 73',
       newsletterTitle: '订阅通讯',
       newsletterText: '偶尔捎来黑森林的消息：新公寓与悄悄话般的优惠。仅此而已。',

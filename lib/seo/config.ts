@@ -22,7 +22,7 @@ export const LEGAL_ENTITY = {
   postalCode: '68723',
   city: 'Oftersheim',
   country: 'DE',
-  email: 'blackforestretreats@axiecentro.de',
+  email: 'rentals@axiecentro.de',
   telephone: '+49 7082 944 39 73',
 } as const;
 

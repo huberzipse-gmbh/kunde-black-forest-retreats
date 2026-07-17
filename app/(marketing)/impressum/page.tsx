@@ -37,7 +37,7 @@ export default function ImpressumPage() {
       <p>
         Telefon: +49 7082 944 39 73
         <br />
-        E-Mail: blackforestretreats@axiecentro.de
+        E-Mail: rentals@axiecentro.de
       </p>
 
       <h3>Registereintrag</h3>
