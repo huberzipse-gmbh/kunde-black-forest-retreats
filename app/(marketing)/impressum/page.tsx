@@ -13,9 +13,6 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
-// HINWEIS: Vor dem Live-Gang die mit [ ... ] markierten Pflichtangaben durch
-// die echten Daten ersetzen (USt-IdNr, ggf. weitere Geschäftsführer).
-
 export default function ImpressumPage() {
   return (
     <LegalLayout title="Impressum" updated="Juni 2026">
@@ -53,8 +50,7 @@ export default function ImpressumPage() {
       <p>
         Umsatzsteuer-Identifikationsnummer gemäß § 27a Umsatzsteuergesetz:
         <br />
-        [BITTE USt-IdNr EINTRAGEN ODER DIESEN ABSCHNITT ENTFERNEN, FALLS NICHT
-        VORHANDEN]
+        DE259102969
       </p>
 
       <h3>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h3>

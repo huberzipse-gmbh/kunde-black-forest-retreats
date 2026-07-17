@@ -42,7 +42,7 @@ export default function DatenschutzPage() {
         <br />
         Deutschland
         <br />
-        Telefon: <a href="tel:+491603756052">+49 7082 944 39 73</a>
+        Telefon: <a href="tel:+4970829443973">+49 7082 944 39 73</a>
         <br />
         E-Mail:{" "}
         <a href="mailto:rentals@axiecentro.de">
