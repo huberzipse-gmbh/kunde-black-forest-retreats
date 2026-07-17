@@ -70,7 +70,7 @@ insert into retreats (
     {"icon":"group","title_de":"Platz für 10 Gäste","text_de":"Acht Schlafzimmer, ideal für Familien und Gruppen."},
     {"icon":"kitchen","title_de":"Großer Essbereich","text_de":"Voll ausgestattete Küche und Tafel für alle."},
     {"icon":"wifi","title_de":"Schnelles WLAN","text_de":"Im ganzen Haus, auch fürs Homeoffice am See."}]'::jsonb,
-  10, 8, 8, 3, '1840', '4,88', 38,
+  10, 8, 8, 3, '1782', '4,88', 38,
   true, '2027', false, false, 'forest', 'moss', '/images/wohnungen/riverhouse/01.webp',
   false, true, 30
 ),

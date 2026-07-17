@@ -127,7 +127,7 @@ export const retreats: RetreatStruct[] = [
   {
     id: 'riverhouse',
     slug: 'riverhouse',
-    year: '1840',
+    year: '1782',
     image: '/images/wohnungen/riverhouse/01.webp',
     gallery: [],
     variant: 'moss',
