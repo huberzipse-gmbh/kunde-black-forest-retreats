@@ -45,8 +45,8 @@ export default function DatenschutzPage() {
         Telefon: <a href="tel:+491603756052">+49 7082 944 39 73</a>
         <br />
         E-Mail:{" "}
-        <a href="mailto:blackforestretreats@axiecentro.de">
-          blackforestretreats@axiecentro.de
+        <a href="mailto:rentals@axiecentro.de">
+          rentals@axiecentro.de
         </a>
       </p>
       <p>

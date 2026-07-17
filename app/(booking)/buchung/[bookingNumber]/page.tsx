@@ -66,7 +66,7 @@ export default async function BookingConfirmationPage({
           Buchungsnummer im Betreff. Änderungen laufen persönlich per Mail. */}
       <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
         <a
-          href={`mailto:blackforestretreats@axiecentro.de?subject=${encodeURIComponent(
+          href={`mailto:rentals@axiecentro.de?subject=${encodeURIComponent(
             t.confirmation.adjustSubject(booking.bookingNumber),
           )}`}
           className="inline-flex items-center justify-center rounded-[3px] bg-brass-400 px-8 py-4 font-body text-xs font-semibold uppercase tracking-[0.18em] text-night transition-colors hover:bg-brass-300"

@@ -276,7 +276,7 @@ export const de = {
     contact: {
       title: 'Kontakt',
       location: 'Neuenbürg · Nationalpark Nordschwarzwald',
-      email: 'blackforestretreats@axiecentro.de',
+      email: 'rentals@axiecentro.de',
       phone: '+49 7082 944 39 73',
       newsletterTitle: 'Newsletter',
       newsletterText: 'Ab und zu Post aus dem Schwarzwald: neue Wohnungen und leise Angebote. Nicht mehr.',
